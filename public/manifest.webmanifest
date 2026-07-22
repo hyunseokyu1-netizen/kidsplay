@@ -1,0 +1,15 @@
+{
+  "name": "KidsPlay - 우리 아이의 작은 놀이터",
+  "short_name": "KidsPlay",
+  "description": "안전하고 즐거운 어린이 교육 게임 10가지",
+  "lang": "ko",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#fffaf0",
+  "theme_color": "#6e61c6",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
