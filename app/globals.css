@@ -130,9 +130,15 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 .coloring-pages { display: flex; width: min(720px, 100%); margin: 0 auto 13px; padding: 3px 3px 9px; overflow-x: auto; }
 .coloring-pages button { flex: 0 0 84px; min-height: 74px; margin: 0 5px; padding: 6px 4px; background: #fff9ed; border: 3px solid transparent; border-radius: 18px; }
 .coloring-pages button.active { background: #f1edff; border-color: #8774dc; box-shadow: 0 5px 0 #d1c8f1; }.coloring-pages span { display: block; font-size: 31px; }.coloring-pages small { display: block; margin-top: 2px; font-size: 10px; }
-.coloring-board { position: relative; width: min(620px, 100%); margin: auto; overflow: hidden; background: #fff; border: 4px dashed #ead9be; border-radius: 26px; }
+.coloring-workspace { display: grid; grid-template-columns: 82px minmax(0, 620px) 82px; align-items: center; justify-content: center; gap: 10px; width: 100%; margin: auto; }
+.coloring-board { position: relative; width: 100%; overflow: hidden; background: #fff; border: 4px dashed #ead9be; border-radius: 26px; }
 .coloring-canvas { display: block; width: 100%; height: auto; background: #fff; cursor: crosshair; touch-action: none; }
 .coloring-outline { z-index: 2; object-fit: contain; pointer-events: none; mix-blend-mode: multiply; transform-origin: center; }
+.brush-toolbar, .zoom-toolbar { display: flex; flex-direction: column; align-items: center; padding: 10px 7px 13px; background: #fff9ed; border: 3px solid #f0e3cd; border-radius: 23px; box-shadow: 0 6px 0 #e2d5c3; }
+.tool-icon { font-size: 24px; }.brush-toolbar > small, .zoom-toolbar > small { margin: 2px 0 9px; color: #80736b; font-size: 9px; }
+.brush-toolbar button, .zoom-toolbar button { display: grid; place-items: center; width: 58px; height: 58px; margin: 4px 0; background: #fff; border: 3px solid #e5ddd4; border-radius: 18px; box-shadow: 0 4px 0 #d7cec5; }
+.brush-toolbar button.active { background: #eeeaff; border-color: #8774dc; outline: 3px solid #bfb3ef; }.brush-preview { display: block; background: #5a4c45; border-radius: 50%; }
+.zoom-toolbar button { color: #6554bc; font-size: 30px; }.zoom-toolbar button:disabled { color: #c7c0bd; opacity: .45; }.zoom-toolbar strong { margin: 3px 0; color: #6d5cc2; font-family: Arial, sans-serif; font-size: 12px; }
 .palette { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; margin: 14px auto 10px; }
 .color-dot { width: 62px; height: 62px; margin: 0 7px; border: 5px solid #fff; border-radius: 50%; box-shadow: 0 5px 0 rgba(65,50,42,.18); }
 .color-dot.selected { outline: 5px solid #473d38; outline-offset: 2px; }
@@ -196,6 +202,7 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
   .game-grid { grid-template-columns: repeat(2, minmax(130px, 1fr)); gap: 12px; }.game-card { min-height: 165px; border-radius: 23px; }.game-icon { width: 72px; height: 72px; font-size: 45px; }.game-copy strong { font-size: 16px; }
   .game-toolbar { grid-template-columns: 70px 1fr 40px; min-height: 92px; padding: 8px 12px; }.home-button { width: 66px; height: 66px; border-radius: 21px; font-size: 29px; }.game-title-pill { padding: 8px 15px; }.game-title-pill span { margin-right: 7px; font-size: 28px; }.game-title-pill strong { font-size: 17px; }.round-dots { display: none; }
   .game-surface { width: calc(100% - 18px); min-height: calc(100vh - 185px); padding: 19px 12px 30px; border-radius: 28px; }.game-prompt { font-size: 20px; }
+  .coloring-workspace { grid-template-columns: 57px minmax(0, 1fr) 57px; gap: 4px; }.brush-toolbar, .zoom-toolbar { padding: 7px 3px 10px; border-width: 2px; border-radius: 17px; }.brush-toolbar button, .zoom-toolbar button { width: 44px; height: 44px; border-radius: 13px; }.tool-icon { font-size: 19px; }.brush-toolbar > small, .zoom-toolbar > small { font-size: 8px; }.zoom-toolbar button { font-size: 23px; }.zoom-toolbar strong { font-size: 9px; }
   .color-dot { width: 48px; height: 48px; margin: 0 3px; }.small-actions { flex-direction: column; }.soft-button { min-height: 62px; }
   .puzzle-target, .puzzle-piece { width: 83px; height: 83px; margin: 5px; font-size: 46px; }.memory-grid { gap: 9px; }.memory-card { min-height: 100px; font-size: 43px; }
   .letter-grid { grid-template-columns: repeat(3, 1fr); }.letter-button, .number-button, .animal-button { min-height: 88px; font-size: 40px; }.number-grid { grid-template-columns: repeat(3, 1fr); }.number-path { flex-wrap: wrap; }.number-path span { width: 36px; height: 36px; margin: 2px; }

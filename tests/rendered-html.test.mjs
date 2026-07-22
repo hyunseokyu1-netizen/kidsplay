@@ -46,3 +46,11 @@ test("uses a multiplication challenge instead of a fixed parent password", async
   assert.doesNotMatch(source, /3초간 누르기|hold for 3 seconds/);
   assert.doesNotMatch(source, /2580|expectedPin|settings\.pin/);
 });
+
+test("offers expanded coloring pages, brush sizes, and zoom", async () => {
+  const source = await readFile(new URL("../src/games/coloring/ColoringGame.tsx", import.meta.url), "utf8");
+  assert.match(source, /const BRUSH_SIZES = \[18, 36, 58\]/);
+  assert.match(source, /zoom >= 1\.5/);
+  assert.match(source, /\/coloring\/robot\.svg/);
+  assert.equal((source.match(/src: "\/coloring\//g) ?? []).length, 14);
+});

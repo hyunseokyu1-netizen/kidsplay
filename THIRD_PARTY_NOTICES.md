@@ -9,5 +9,12 @@ KidsPlay의 색칠 놀이 선화는 [Openclipart](https://openclipart.org/)에�
 - Rocket coloring page by mvolz — https://openclipart.org/detail/272531/rocket-coloring-page
 - elephant - lineart by frankes — https://openclipart.org/detail/214373/elephant-lineart
 - fish - lineart by frankes — https://openclipart.org/detail/214577/fish-lineart
+- Cat Line Art by gammillian — https://openclipart.org/detail/75883/cat-line-art
+- dog - lineart by frankes — https://openclipart.org/detail/213981/dog-lineart
+- Train 2 (outline) by Firkin — https://openclipart.org/detail/301777/train-2-outline
+- Airplane by Siddymcbill — https://openclipart.org/detail/191525/airplane
+- flower - lineart by frankes — https://openclipart.org/detail/214395/flower-lineart
+- Castle by nicubunu — https://openclipart.org/detail/3993/castle
+- Robot by david_ng — https://openclipart.org/detail/214199/robot
 
 라이선스 안내: https://openclipart.org/share
