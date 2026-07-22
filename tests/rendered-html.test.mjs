@@ -42,5 +42,7 @@ test("uses a multiplication challenge instead of a fixed parent password", async
   const source = await readFile(new URL("../src/components/KidsPlayApp.tsx", import.meta.url), "utf8");
   assert.match(source, /left \* right/);
   assert.match(source, /곱셈 문제를 풀어 주세요/);
+  assert.match(source, /setTimeout\(onExitRequest, 1000\)/);
+  assert.doesNotMatch(source, /3초간 누르기|hold for 3 seconds/);
   assert.doesNotMatch(source, /2580|expectedPin|settings\.pin/);
 });

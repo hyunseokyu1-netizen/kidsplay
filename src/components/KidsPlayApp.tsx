@@ -118,7 +118,7 @@ function ParentScreen({
 function KidHeader({ language, remaining, progress, onExitRequest }: { language: Language; remaining: number; progress: Progress; onExitRequest: () => void }) {
   const holdTimer = useRef<number | null>(null);
   const startHold = () => {
-    holdTimer.current = window.setTimeout(onExitRequest, 3000);
+    holdTimer.current = window.setTimeout(onExitRequest, 1000);
   };
   const stopHold = () => {
     if (holdTimer.current) window.clearTimeout(holdTimer.current);
@@ -127,10 +127,10 @@ function KidHeader({ language, remaining, progress, onExitRequest }: { language:
   const minutes = Math.max(0, Math.ceil(remaining / 60));
   return (
     <header className="kid-header">
-      <button className="parent-corner left" onMouseDown={startHold} onMouseUp={stopHold} onMouseLeave={stopHold} onTouchStart={startHold} onTouchEnd={stopHold} aria-label={tx(language, "부모 메뉴: 3초간 누르기", "Parent menu: hold for 3 seconds")}>🔒</button>
+      <button className="parent-corner left" onMouseDown={startHold} onMouseUp={stopHold} onMouseLeave={stopHold} onTouchStart={startHold} onTouchEnd={stopHold} aria-label={tx(language, "부모 메뉴: 1초간 누르기", "Parent menu: hold for 1 second")}>🔒</button>
       <div className="kid-brand"><span>K</span> KidsPlay</div>
       <div className="kid-status"><span>⭐ {progress.stars}</span><span>⏱ {minutes}{tx(language, "분", "m")}</span></div>
-      <button className="parent-corner right" onMouseDown={startHold} onMouseUp={stopHold} onMouseLeave={stopHold} onTouchStart={startHold} onTouchEnd={stopHold} aria-label={tx(language, "부모 메뉴: 3초간 누르기", "Parent menu: hold for 3 seconds")}>🔒</button>
+      <button className="parent-corner right" onMouseDown={startHold} onMouseUp={stopHold} onMouseLeave={stopHold} onTouchStart={startHold} onTouchEnd={stopHold} aria-label={tx(language, "부모 메뉴: 1초간 누르기", "Parent menu: hold for 1 second")}>🔒</button>
     </header>
   );
 }
@@ -158,7 +158,7 @@ function KidsHub({ language, progress, onChoose }: { language: Language; progres
           </button>
         ))}
       </div>
-      <p className="hub-hint">🔒 {tx(language, "부모님 메뉴는 위쪽 모서리를 3초간 눌러 주세요", "Parents: hold a top corner for 3 seconds")}</p>
+      <p className="hub-hint">🔒 {tx(language, "부모님 메뉴는 위쪽 모서리를 1초간 눌러 주세요", "Parents: hold a top corner for 1 second")}</p>
     </main>
   );
 }

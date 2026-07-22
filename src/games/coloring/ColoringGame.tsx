@@ -23,7 +23,7 @@ const COLORING_PAGES = [
 function drawContained(context: CanvasRenderingContext2D, image: HTMLImageElement) {
   const width = image.naturalWidth || BOARD_WIDTH;
   const height = image.naturalHeight || BOARD_HEIGHT;
-  const scale = Math.min(BOARD_WIDTH / width, BOARD_HEIGHT / height);
+  const scale = Math.min(BOARD_WIDTH / width, BOARD_HEIGHT / height) * 0.76;
   const drawWidth = width * scale;
   const drawHeight = height * scale;
   context.drawImage(image, (BOARD_WIDTH - drawWidth) / 2, (BOARD_HEIGHT - drawHeight) / 2, drawWidth, drawHeight);
@@ -35,6 +35,7 @@ export function ColoringGame({ language, onComplete }: GameProps) {
   const painting = useRef(false);
   const lastPoint = useRef<{ x: number; y: number } | null>(null);
   const [color, setColor] = useState(COLORS[0]);
+  const [isEraser, setIsEraser] = useState(false);
   const [pageIndex, setPageIndex] = useState(0);
   const [hasPaint, setHasPaint] = useState(false);
   const page = COLORING_PAGES[pageIndex];
@@ -65,14 +66,14 @@ export function ColoringGame({ language, onComplete }: GameProps) {
     const context = event.currentTarget.getContext("2d");
     if (!context) return;
     context.globalCompositeOperation = "source-over";
-    context.globalAlpha = 0.78;
+    context.globalAlpha = isEraser ? 1 : 0.78;
     if (!hasPaint) {
       context.globalAlpha = 1;
       context.fillStyle = "#FFFFFF";
       context.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
-      context.globalAlpha = 0.78;
+      context.globalAlpha = isEraser ? 1 : 0.78;
     }
-    context.fillStyle = color;
+    context.fillStyle = isEraser ? "#FFFFFF" : color;
     context.beginPath();
     context.arc(point.x, point.y, 18, 0, Math.PI * 2);
     context.fill();
@@ -85,9 +86,9 @@ export function ColoringGame({ language, onComplete }: GameProps) {
     const context = event.currentTarget.getContext("2d");
     if (!context) return;
     context.globalCompositeOperation = "source-over";
-    context.globalAlpha = 0.78;
-    context.strokeStyle = color;
-    context.lineWidth = 36;
+    context.globalAlpha = isEraser ? 1 : 0.78;
+    context.strokeStyle = isEraser ? "#FFFFFF" : color;
+    context.lineWidth = isEraser ? 48 : 36;
     context.lineCap = "round";
     context.lineJoin = "round";
     context.beginPath();
@@ -163,12 +164,13 @@ export function ColoringGame({ language, onComplete }: GameProps) {
           onPointerLeave={stopPainting}
           aria-label={tx(language, `${page.ko} 색칠 도화지`, `${page.en} coloring canvas`)}
         />
-        <Image ref={outlineRef} key={page.src} src={page.src} alt="" fill sizes="620px" unoptimized draggable={false} className="coloring-outline" />
+        <Image ref={outlineRef} key={page.src} src={page.src} alt="" fill sizes="620px" unoptimized draggable={false} className="coloring-outline" style={{ objectFit: "contain", transform: "scale(0.76)" }} />
       </div>
       <div className="palette" aria-label={tx(language, "색상 선택", "Choose a color")}>
         {COLORS.map((item) => (
-          <button key={item} className={`color-dot ${color === item ? "selected" : ""}`} style={{ background: item }} onClick={() => setColor(item)} aria-label={item} />
+          <button key={item} className={`color-dot ${color === item && !isEraser ? "selected" : ""}`} style={{ background: item }} onClick={() => { setColor(item); setIsEraser(false); }} aria-label={item} />
         ))}
+        <button className={`eraser-button ${isEraser ? "selected" : ""}`} onClick={() => setIsEraser(true)} aria-label={tx(language, "지우개", "Eraser")}><span>🧽</span><small>{tx(language, "지우개", "Eraser")}</small></button>
       </div>
       <div className="small-actions coloring-actions">
         <button className="soft-button" onClick={autoPaint}>✨ {tx(language, "자동 색칠", "Magic paint")}</button>
