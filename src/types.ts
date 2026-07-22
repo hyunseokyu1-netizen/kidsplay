@@ -26,7 +26,6 @@ export type Settings = {
   age: AgeGroup;
   minutes: number;
   language: Language;
-  pin: string;
 };
 
 export type Progress = {
@@ -34,4 +33,3 @@ export type Progress = {
   completed: Partial<Record<GameId, number>>;
   stickers: string[];
 };
-

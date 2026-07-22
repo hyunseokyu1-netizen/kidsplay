@@ -89,8 +89,6 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 .game-picker button { flex: 0 0 82px; height: 82px; margin-right: 9px; padding: 8px 4px; background: #faf8f4; border: 2px solid transparent; border-radius: 19px; font-size: 27px; }
 .game-picker button.active { background: #f0edff; border-color: #8a78db; box-shadow: 0 6px 12px rgba(100, 81, 183, .13); }
 .game-picker small { display: block; max-width: 72px; margin-top: 5px; overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
-.pin-setting { display: flex; align-items: center; justify-content: space-between; margin: -4px 0 18px; color: #766d67; font-size: 13px; }
-.pin-setting input { width: 105px; height: 44px; padding: 7px 12px; text-align: center; letter-spacing: 7px; background: #faf8f4; border: 1px solid #e8e1d9; border-radius: 12px; }
 .start-button { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 80px; padding: 16px 24px; color: #fff; background: linear-gradient(135deg, #7565cf, #6353bd); border: 0; border-radius: 22px; box-shadow: 0 9px 0 #4f429a, 0 18px 26px rgba(85, 68, 170, .22); font-size: 22px; }
 .start-button span { display: inline-grid; place-items: center; width: 38px; height: 38px; margin-right: 13px; color: #7161c7; background: #fff; border-radius: 50%; font-size: 16px; }
 .start-button:disabled { opacity: .45; cursor: not-allowed; }
@@ -129,12 +127,18 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 .game-surface { width: min(1000px, calc(100% - 40px)); min-height: calc(100vh - 226px); margin: 0 auto 30px; padding: 22px 38px 35px; background: rgba(255,255,255,.86); border: 4px solid #fff; border-radius: 36px; box-shadow: var(--shadow); text-align: center; }
 .game-prompt { margin: 0 0 18px; font-size: clamp(21px, 3vw, 31px); line-height: 1.35; }
 
-.coloring-canvas { display: block; width: min(620px, 100%); height: auto; margin: auto; background: #fff9e8; border: 4px dashed #ead9be; border-radius: 26px; cursor: crosshair; }
+.coloring-pages { display: flex; width: min(720px, 100%); margin: 0 auto 13px; padding: 3px 3px 9px; overflow-x: auto; }
+.coloring-pages button { flex: 0 0 84px; min-height: 74px; margin: 0 5px; padding: 6px 4px; background: #fff9ed; border: 3px solid transparent; border-radius: 18px; }
+.coloring-pages button.active { background: #f1edff; border-color: #8774dc; box-shadow: 0 5px 0 #d1c8f1; }.coloring-pages span { display: block; font-size: 31px; }.coloring-pages small { display: block; margin-top: 2px; font-size: 10px; }
+.coloring-board { position: relative; width: min(620px, 100%); margin: auto; overflow: hidden; background: #fff; border: 4px dashed #ead9be; border-radius: 26px; }
+.coloring-canvas { display: block; width: 100%; height: auto; background: #fff; cursor: crosshair; touch-action: none; }
+.coloring-outline { z-index: 2; padding: 8px; object-fit: contain; pointer-events: none; mix-blend-mode: multiply; }
 .palette { display: flex; align-items: center; justify-content: center; margin: 14px auto 10px; }
 .color-dot { width: 62px; height: 62px; margin: 0 7px; border: 5px solid #fff; border-radius: 50%; box-shadow: 0 5px 0 rgba(65,50,42,.18); }
 .color-dot.selected { outline: 5px solid #473d38; outline-offset: 2px; }
-.small-actions { display: flex; justify-content: center; }
+.small-actions { display: flex; flex-wrap: wrap; justify-content: center; }
 .soft-button, .next-button { min-height: 66px; margin: 7px; padding: 13px 24px; background: #f4eee6; border: 0; border-radius: 20px; box-shadow: 0 5px 0 #dcd2c6; font-size: 16px; }
+.soft-button:disabled, .done-button:disabled { opacity: .38; cursor: not-allowed; }.done-button { min-height: 66px; margin: 7px; padding: 13px 25px; color: #fff; background: #6e5bc9; border: 0; border-radius: 20px; box-shadow: 0 5px 0 #51409e; font-size: 16px; }
 
 .puzzle-targets, .puzzle-pieces { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; min-height: 170px; padding: 18px; background: #f4f0ff; border: 4px dashed #d4caef; border-radius: 28px; }
 .puzzle-pieces { min-height: 135px; margin-top: 22px; background: #fff8e8; border-color: #eadbbd; }
@@ -164,10 +168,12 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 .matching-stage { display: flex; align-items: center; justify-content: center; min-height: 360px; }.match-hero { position: relative; display: grid; place-items: center; width: 230px; height: 230px; background: #fff1c9; border: 6px solid #fff; border-radius: 48px; box-shadow: 0 10px 0 #e5cf8e; font-size: 120px; }.match-hero button { position: absolute; right: -15px; bottom: -15px; width: 80px; height: 80px; background: #6dc2a6; border: 5px solid #fff; border-radius: 50%; font-size: 32px; }.match-plus { margin: 25px; color: #b9aca4; font-size: 54px; }.match-choices { display: grid; grid-template-columns: repeat(2, 145px); gap: 14px; }.match-choices button { min-height: 140px; background: #fff; border: 4px solid #efdaea; border-radius: 32px; box-shadow: 0 8px 0 #dbb9d1; font-size: 75px; }
 
 .modal-backdrop { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(54, 44, 39, .63); backdrop-filter: blur(7px); }
-.pin-modal, .success-card { width: min(470px, 100%); padding: 28px 34px 32px; background: #fffaf1; border: 6px solid #fff; border-radius: 38px; box-shadow: 0 28px 70px rgba(29, 20, 17, .35); text-align: center; }
-.pin-icon { font-size: 58px; }.pin-modal h2, .success-card h2 { margin: 8px 0 6px; font-size: 30px; }.pin-modal p { margin: 0; color: #82766e; font-family: Arial, sans-serif; font-size: 14px; }
-.pin-dots { margin: 18px 0; color: #7462cd; font-size: 31px; letter-spacing: 9px; }.pin-dots.wrong { color: #e0616e; animation: shake .3s linear; }
-.pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }.pin-pad button { min-height: 70px; background: #fff; border: 2px solid #e8e0d7; border-radius: 19px; box-shadow: 0 5px 0 #ded4c9; font-size: 24px; }.pin-pad .pin-cancel { color: #a79c95; background: transparent; border-color: transparent; box-shadow: none; }
+.math-modal, .success-card { position: relative; width: min(470px, 100%); padding: 28px 34px 32px; background: #fffaf1; border: 6px solid #fff; border-radius: 38px; box-shadow: 0 28px 70px rgba(29, 20, 17, .35); text-align: center; }
+.math-close { position: absolute; top: 16px; right: 16px; width: 52px; height: 52px; color: #8f837b; background: #f1ebe4; border: 0; border-radius: 50%; font-size: 20px; }
+.math-icon { font-size: 58px; }.math-modal h2, .success-card h2 { margin: 8px 0 6px; font-size: 30px; }.math-modal p { margin: 0; color: #82766e; font-family: Arial, sans-serif; font-size: 14px; }
+.math-problem { display: flex; align-items: center; justify-content: center; min-height: 90px; margin: 17px 0; padding: 10px 16px; color: #554a44; background: #f1edff; border: 3px solid #ddd5fa; border-radius: 23px; font-size: 34px; }
+.math-problem span { margin: 0 13px; color: #9b90bf; }.math-answer { display: grid; place-items: center; min-width: 62px; min-height: 57px; padding: 4px 8px; color: #6d5bc5; background: #fff; border-radius: 14px; }.math-problem.wrong { color: #d84f60; border-color: #ed9eaa; animation: shake .3s linear; }
+.math-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }.math-pad button { min-height: 70px; background: #fff; border: 2px solid #e8e0d7; border-radius: 19px; box-shadow: 0 5px 0 #ded4c9; font-size: 24px; }.math-pad .math-clear { color: #9c7168; background: #fff1ec; }.math-pad .math-submit { color: #fff; background: #6e5bc9; border-color: #6e5bc9; box-shadow: 0 5px 0 #50409b; }
 .success-backdrop { background: rgba(97, 79, 161, .32); }.success-card { position: relative; width: min(570px, 100%); padding-top: 20px; overflow: hidden; }.confetti { color: #ec7b93; font-size: 26px; word-spacing: 13px; }.success-mascot { display: block; font-size: 105px; }.success-card h2 { margin-top: -8px; font-size: 38px; }.earned-stars { color: #f7bb3c; font-size: 61px; letter-spacing: 6px; text-shadow: 0 5px 0 #d49227; }.new-sticker { display: inline-flex; align-items: center; margin: 10px 0; padding: 9px 16px; background: #e9f7ef; border-radius: 99px; }.new-sticker span { margin-left: 8px; font-size: 31px; }.success-actions { display: flex; justify-content: center; margin-top: 13px; }.success-actions button { min-width: 190px; }.next-button { color: #fff; background: #6e5bc9; box-shadow: 0 6px 0 #51409e; }
 
 @keyframes sun-wiggle { 0%,100% { transform: rotate(0); } 50% { transform: rotate(12deg) scale(1.05); } }
@@ -194,5 +200,5 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
   .letter-grid { grid-template-columns: repeat(3, 1fr); }.letter-button, .number-button, .animal-button { min-height: 88px; font-size: 40px; }.number-grid { grid-template-columns: repeat(3, 1fr); }.number-path { flex-wrap: wrap; }.number-path span { width: 36px; height: 36px; margin: 2px; }
   .vehicle-road { flex-wrap: wrap; padding: 12px; }.vehicle-button { width: 120px; height: 115px; font-size: 56px; }.dino-grid { grid-template-columns: 1fr; }.dino-button { min-height: 135px; font-size: 72px; }.dino-button small { min-height: auto; }
   .shape-row { flex-direction: column; min-height: auto; }.shape-button { width: 85%; height: 150px; margin: 8px; }.shape { width: 85px; height: 85px; }.shape.triangle { border-right-width: 53px; border-bottom-width: 94px; border-left-width: 53px; }
-  .matching-stage { flex-direction: column; }.match-hero { width: 180px; height: 180px; font-size: 90px; }.match-plus { margin: 12px; }.match-choices { grid-template-columns: repeat(3, 1fr); width: 100%; }.match-choices button { min-height: 100px; font-size: 55px; }.pin-modal, .success-card { padding: 22px 18px; }.success-actions { flex-direction: column; }.success-actions button { width: 100%; margin: 6px 0; }
+  .matching-stage { flex-direction: column; }.match-hero { width: 180px; height: 180px; font-size: 90px; }.match-plus { margin: 12px; }.match-choices { grid-template-columns: repeat(3, 1fr); width: 100%; }.match-choices button { min-height: 100px; font-size: 55px; }.math-modal, .success-card { padding: 22px 18px; }.success-actions { flex-direction: column; }.success-actions button { width: 100%; margin: 6px 0; }
 }

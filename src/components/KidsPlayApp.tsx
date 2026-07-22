@@ -16,7 +16,7 @@ import { VehicleGame } from "../games/vehicles/VehicleGame";
 import { useSpeech } from "../hooks/useSpeech";
 import type { AgeGroup, GameId, Language, Progress, Settings } from "../types";
 
-const DEFAULT_SETTINGS: Settings = { age: "preschool", minutes: 30, language: "ko", pin: "2580" };
+const DEFAULT_SETTINGS: Settings = { age: "preschool", minutes: 30, language: "ko" };
 const DEFAULT_PROGRESS: Progress = { stars: 0, completed: {}, stickers: [] };
 
 const GAME_COMPONENTS = {
@@ -105,12 +105,7 @@ function ParentScreen({
             </div>
           </fieldset>
 
-          <label className="pin-setting">
-            <span>{tx(language, "부모 PIN", "Parent PIN")}</span>
-            <input inputMode="numeric" maxLength={4} value={settings.pin} onChange={(event) => onSettings({ ...settings, pin: event.target.value.replace(/\D/g, "").slice(0, 4) })} aria-label={tx(language, "네 자리 부모 PIN", "Four-digit parent PIN")} />
-          </label>
-
-          <button className="start-button" disabled={settings.pin.length !== 4} onClick={onStart}>
+          <button className="start-button" onClick={onStart}>
             <span>▶</span>{tx(language, "전체 화면으로 시작", "Start full screen")}
           </button>
           <p className="parent-tip">🖱 {tx(language, "시작 후에는 마우스만으로 놀 수 있어요", "After starting, everything works with the mouse")}</p>
@@ -184,31 +179,49 @@ function GameStage({ gameId, settings, progress, onHome, onComplete, onExitReque
   );
 }
 
-function ExitGate({ language, expectedPin, timedOut, onClose, onExit }: { language: Language; expectedPin: string; timedOut: boolean; onClose: () => void; onExit: () => void }) {
-  const [pin, setPin] = useState("");
+function createMathProblem() {
+  const left = Math.floor(Math.random() * 8) + 2;
+  const right = Math.floor(Math.random() * 8) + 2;
+  return { left, right, answer: left * right };
+}
+
+function ExitGate({ language, timedOut, onClose, onExit }: { language: Language; timedOut: boolean; onClose: () => void; onExit: () => void }) {
+  const [problem, setProblem] = useState(createMathProblem);
+  const [answer, setAnswer] = useState("");
   const [wrong, setWrong] = useState(false);
   const press = (number: string) => {
-    if (pin.length >= 4) return;
-    const next = pin + number;
-    setPin(next);
+    if (answer.length >= 2) return;
+    setAnswer(answer + number);
     setWrong(false);
-    if (next.length === 4) {
-      if (next === expectedPin) window.setTimeout(onExit, 250);
-      else window.setTimeout(() => { setWrong(true); setPin(""); }, 350);
+  };
+  const submit = () => {
+    if (!answer) return;
+    if (Number(answer) === problem.answer) {
+      window.setTimeout(onExit, 250);
+      return;
     }
+    setWrong(true);
+    window.setTimeout(() => {
+      setAnswer("");
+      setProblem(createMathProblem());
+      setWrong(false);
+    }, 500);
   };
   return (
     <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label={tx(language, "부모 확인", "Parent check")}>
-      <div className="pin-modal">
-        <div className="pin-icon">{timedOut ? "⏰" : "🔐"}</div>
+      <div className="math-modal">
+        {!timedOut && <button className="math-close" onClick={onClose} aria-label={tx(language, "닫기", "Close")}>✕</button>}
+        <div className="math-icon">{timedOut ? "⏰" : "🧠"}</div>
         <h2>{timedOut ? tx(language, "놀이 시간이 끝났어요", "Play time is over") : tx(language, "부모님 확인", "Grown-up check")}</h2>
-        <p>{tx(language, "부모 PIN 네 자리를 눌러 주세요", "Enter the four-digit parent PIN")}</p>
-        <div className={`pin-dots ${wrong ? "wrong" : ""}`}>{[0, 1, 2, 3].map((index) => <span key={index}>{pin.length > index ? "●" : "○"}</span>)}</div>
-        <div className="pin-pad">
+        <p>{tx(language, "곱셈 문제를 풀어 주세요", "Solve the multiplication problem")}</p>
+        <div className={`math-problem ${wrong ? "wrong" : ""}`} aria-live="polite">
+          <strong>{problem.left} × {problem.right}</strong><span>=</span><strong className="math-answer">{answer || "?"}</strong>
+        </div>
+        <div className="math-pad">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => <button key={number} onClick={() => press(String(number))}>{number}</button>)}
-          {!timedOut && <button className="pin-cancel" onClick={onClose}>✕</button>}
+          <button className="math-clear" onClick={() => { setAnswer(""); setWrong(false); }}>C</button>
           <button onClick={() => press("0")}>0</button>
-          <button onClick={() => setPin(pin.slice(0, -1))}>⌫</button>
+          <button className="math-submit" onClick={submit} aria-label={tx(language, "정답 확인", "Check answer")}>✓</button>
         </div>
       </div>
     </div>
@@ -252,7 +265,10 @@ export function KidsPlayApp() {
       try {
         const savedSettings = window.localStorage.getItem("kidsplay-settings");
         const savedProgress = window.localStorage.getItem("kidsplay-progress");
-        if (savedSettings) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(savedSettings) });
+        if (savedSettings) {
+          const saved = JSON.parse(savedSettings) as Partial<Settings>;
+          setSettings({ age: saved.age || DEFAULT_SETTINGS.age, minutes: saved.minutes || DEFAULT_SETTINGS.minutes, language: saved.language || DEFAULT_SETTINGS.language });
+        }
         if (savedProgress) setProgress({ ...DEFAULT_PROGRESS, ...JSON.parse(savedProgress) });
       } catch { /* Local storage can be disabled in private browsing. */ }
     }, 0);
@@ -347,7 +363,7 @@ export function KidsPlayApp() {
         <><KidHeader language={settings.language} remaining={remaining} progress={progress} onExitRequest={() => setExitGate(true)} /><KidsHub language={settings.language} progress={progress} onChoose={setActiveGame} /></>
       )}
       {success && <SuccessCard language={settings.language} stars={success.stars} sticker={success.sticker} onNext={nextGame} onHome={() => { setSuccess(null); setActiveGame(null); }} />}
-      {exitGate && <ExitGate language={settings.language} expectedPin={settings.pin} timedOut={timedOut} onClose={() => setExitGate(false)} onExit={exit} />}
+      {exitGate && <ExitGate language={settings.language} timedOut={timedOut} onClose={() => setExitGate(false)} onExit={exit} />}
     </div>
   );
 }
