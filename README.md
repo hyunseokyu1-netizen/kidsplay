@@ -32,9 +32,9 @@ KidsPlay는 **2~7세 아이들**을 위한 교육용 웹 게임 플랫폼입니�
 
 ### 체험하기
 
-[KidsPlay 사이트 열기](https://kidsplay-little-playground.hyunseok-yu1.chatgpt.site)
+[KidsPlay 사이트 열기](https://kidsnara.pages.dev)
 
-현재 배포된 체험 사이트는 비공개로 운영되어 ChatGPT 로그인이 필요할 수 있습니다.
+로그인이나 설치 없이 바로 놀 수 있습니다.
 
 ### 로컬에서 실행하기
 
@@ -78,9 +78,9 @@ To leave Kids Mode, an adult holds the lock button for one second and answers a 
 
 ### Live demo
 
-[Open KidsPlay](https://kidsplay-little-playground.hyunseok-yu1.chatgpt.site)
+[Open KidsPlay](https://kidsnara.pages.dev)
 
-The current preview deployment is private, so a ChatGPT sign-in may be required.
+No sign-in or install required — just open and play.
 
 ### Run locally
 

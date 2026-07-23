@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kidsplay.pages.dev";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kidsnara.pages.dev";
 const isCloudflarePagesBuild = process.env.CLOUDFLARE_PAGES_BUILD === "1";
 const imageUrl = new URL("/og.png", siteUrl).toString();
 const title = "KidsPlay — 우리 아이의 작은 놀이터";
