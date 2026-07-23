@@ -99,9 +99,13 @@ npm run lint
 npm run build
 ```
 
+## Cloudflare Pages
+
+Use `npm run build:pages` as the build command and `out` as the build output directory. Set the production branch to `main`.
+
 ## Tech stack
 
-Next.js · React · TypeScript · Tailwind CSS · Cloudflare Workers · PWA
+Next.js · React · TypeScript · Tailwind CSS · Cloudflare Pages / Workers · PWA
 
 ## Artwork credits
 
