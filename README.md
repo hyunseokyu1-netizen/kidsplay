@@ -1,16 +1,42 @@
-# KidsPlay
+# KidsPlay · 꼬마 놀이터
 
-오래된 컴퓨터도 아이 전용 교육용 게임기로 바꿔 주는 웹 기반 키즈 게임 플랫폼입니다. 설치 없이 브라우저에서 실행되며, 한 번 접속한 뒤에는 오프라인에서도 사용할 수 있습니다.
+> 아이가 혼자서도 안전하고 즐겁게 놀며 배울 수 있는 웹 기반 교육 놀이 공간<br>
+> A safe, playful web learning space made for young children.
 
-## 포함된 놀이
+[한국어](#한국어) · [English](#english)
 
-- 14가지 그림 자유 색칠하기, 퍼즐, 같은 그림 찾기
-- 알파벳, 숫자, 동물, 탈것
-- 공룡, 모양, 그림 맞추기
+![KidsPlay — 꼬마 놀이터](public/og.png)
 
-연령(2~3세, 4~5세, 6~7세)에 따라 게임 난이도가 조절됩니다. 별과 스티커, 진행 기록, 언어와 부모 설정은 현재 기기에 저장됩니다.
+## 한국어
 
-## 실행
+KidsPlay는 **2~7세 아이들**을 위한 교육용 웹 게임 플랫폼입니다. 오래된 컴퓨터나 태블릿도 아이 전용 놀이 기기로 활용할 수 있도록, 큰 버튼과 쉬운 조작, 따뜻한 색감으로 만들었습니다. 설치 없이 브라우저에서 바로 시작할 수 있고, 한 번 접속한 뒤에는 오프라인에서도 주요 기능을 사용할 수 있습니다.
+
+### 주요 기능
+
+- 색칠 놀이, 퍼즐, 짝꿍 찾기, 알파벳, 숫자, 동물, 탈것, 공룡, 모양, 그림 맞추기 등 **10가지 놀이**
+- 나비, 동물, 로켓, 자동차, 기차, 성, 로봇 등 **14가지 색칠 그림**
+- 2~3세, 4~5세, 6~7세 연령에 맞춘 난이도 조절
+- 한국어와 영어 지원
+- 별, 스티커와 기기 내 진행 기록 저장
+- 마우스, 터치, 키보드로 조작 가능
+- PWA 및 오프라인 실행 지원
+- 광고와 외부 링크 없이 아이가 놀이에 집중할 수 있는 화면
+
+### 아이를 위한 안전 설계
+
+키즈 모드에서 부모 화면으로 돌아가려면 화면 위쪽의 자물쇠를 1초간 누른 뒤 간단한 곱셈 문제를 풀어야 합니다. 아이가 우연히 설정 화면을 여는 일을 줄이기 위한 장치이며, 고정 비밀번호나 PIN은 사용하지 않습니다.
+
+### 화면
+
+![KidsPlay 색칠 놀이 화면](docs/screenshots/coloring-play.png)
+
+### 체험하기
+
+[KidsPlay 사이트 열기](https://kidsplay-little-playground.hyunseok-yu1.chatgpt.site)
+
+현재 배포된 체험 사이트는 비공개로 운영되어 ChatGPT 로그인이 필요할 수 있습니다.
+
+### 로컬에서 실행하기
 
 Node.js 22.13 이상이 필요합니다.
 
@@ -19,13 +45,64 @@ npm install
 npm run dev
 ```
 
-검증용 명령은 다음과 같습니다.
+검증과 프로덕션 빌드는 다음 명령으로 실행합니다.
 
 ```bash
 npm test
 npm run lint
+npm run build
 ```
 
-## 부모 모드
+## English
 
-키즈 모드에서 화면 위쪽 모서리의 자물쇠를 1초간 누른 뒤 간단한 곱셈 문제를 풀면 부모 화면으로 돌아갑니다. 고정 비밀번호는 사용하지 않습니다.
+KidsPlay is an educational web game platform for **children ages 2–7**. It is designed with large controls, simple interactions, and friendly colors so that even an older computer or tablet can become a dedicated play-and-learning device. Children can start in a browser with no installation, and core activities remain available offline after the first visit.
+
+### Highlights
+
+- **10 activities**, including coloring, puzzles, memory matching, alphabet, numbers, animals, vehicles, dinosaurs, shapes, and picture matching
+- **14 coloring pages**, featuring butterflies, animals, rockets, cars, trains, castles, robots, and more
+- Age-adjusted difficulty for ages 2–3, 4–5, and 6–7
+- Korean and English language support
+- Stars, stickers, and progress stored on the current device
+- Mouse, touch, and keyboard controls
+- PWA installation and offline support
+- A focused child-friendly interface with no ads or external links
+
+### Parent-friendly safety
+
+To leave Kids Mode, an adult holds the lock button for one second and answers a simple multiplication question. This helps prevent children from opening settings by accident. There is no fixed PIN or password to remember.
+
+### Screenshot
+
+![KidsPlay coloring activity](docs/screenshots/coloring-play.png)
+
+### Live demo
+
+[Open KidsPlay](https://kidsplay-little-playground.hyunseok-yu1.chatgpt.site)
+
+The current preview deployment is private, so a ChatGPT sign-in may be required.
+
+### Run locally
+
+Node.js 22.13 or later is required.
+
+```bash
+npm install
+npm run dev
+```
+
+Run the test, lint, and production build commands with:
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+## Tech stack
+
+Next.js · React · TypeScript · Tailwind CSS · Cloudflare Workers · PWA
+
+## Artwork credits
+
+Coloring-page artwork sources and licenses are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
