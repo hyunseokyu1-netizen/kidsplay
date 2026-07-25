@@ -70,9 +70,12 @@ export function RunningGame({ language, onComplete }: GameProps) {
       <div className="runner-status"><span>{tx(language, "거리", "Distance")} <strong>{distance}m</strong></span><span>{tx(language, "기록", "Record")} <strong>{record}m</strong></span><span className={seconds <= 2 ? "urgent" : ""}>{tx(language, "남은 시간", "Time")} <strong>{seconds}</strong></span></div>
       <p className="game-prompt">{tx(language, "5초 안에 같은 모양을 눌러 계속 달려요!", "Match the shape within 5 seconds and keep running!")}</p>
       <div className="runner-scene">
+        <div className="runner-clouds" aria-hidden="true"><span /><span /><span /></div>
         <div className="distance-signs"><span>{distance + 10}m</span><span>{distance + 20}m</span><span>{distance + 30}m</span></div>
         <div className="runner-hills"><span /><span /><span /></div>
-        <div className="runner-character"><EmojiIcon symbol="🐣" /></div>
+        <div className="runner-trees" aria-hidden="true"><span /><span /><span /><span /></div>
+        <div className="runner-speed-lines" aria-hidden="true"><span /><span /><span /></div>
+        <div key={turn} className="runner-character"><EmojiIcon symbol="🐣" /><i /><b /></div>
         <div className="runner-bubble"><Shape type={target} /></div>
         <div className="runner-road" />
         {ended && (

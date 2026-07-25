@@ -31,14 +31,15 @@ test("server-renders the KidsPlay parent screen", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/);
 });
 
-test("includes all eighteen game modules in the client payload", async () => {
+test("includes all seventeen game modules in the client payload", async () => {
   const response = await render();
   const html = await response.text();
   const gameLabels = [
     "색칠 놀이", "퍼즐", "짝꿍 찾기", "알파벳", "숫자 놀이", "동물 친구", "탈것", "공룡 나라", "모양 찾기", "그림 맞추기",
-    "미로 찾기", "동물 직소", "더하기 카드", "그림 그리기", "숫자 선 잇기", "별 팡팡", "모양 달리기", "숨은 모양",
+    "미로 찾기", "동물 직소", "더하기 카드", "숫자 선 잇기", "별 팡팡", "모양 달리기", "숨은 모양",
   ];
   for (const label of gameLabels) assert.match(html, new RegExp(label));
+  assert.doesNotMatch(html, /그림 그리기/);
 });
 
 test("uses a multiplication challenge instead of a fixed parent password", async () => {
@@ -56,7 +57,7 @@ test("ships the requested interactive game mechanics", async () => {
   const maze = await readFile(new URL("../src/games/maze/MazeGame.tsx", import.meta.url), "utf8");
   const jigsaw = await readFile(new URL("../src/games/jigsaw/JigsawGame.tsx", import.meta.url), "utf8");
   const addition = await readFile(new URL("../src/games/addition/AdditionGame.tsx", import.meta.url), "utf8");
-  const drawing = await readFile(new URL("../src/games/drawing/DrawingGame.tsx", import.meta.url), "utf8");
+  const coloring = await readFile(new URL("../src/games/coloring/ColoringGame.tsx", import.meta.url), "utf8");
   const dots = await readFile(new URL("../src/games/connectdots/ConnectDotsGame.tsx", import.meta.url), "utf8");
   const popstar = await readFile(new URL("../src/games/popstar/PopStarGame.tsx", import.meta.url), "utf8");
   const running = await readFile(new URL("../src/games/running/RunningGame.tsx", import.meta.url), "utf8");
@@ -73,13 +74,15 @@ test("ships the requested interactive game mechanics", async () => {
   assert.match(addition, /values\.left \+ values\.right/);
   assert.match(addition, /TOTAL_ROUNDS = 10/);
   assert.match(addition, /answerPositions/);
-  assert.match(drawing, /getContext\("2d"\)/);
-  assert.doesNotMatch(drawing, /자유 그림|Free draw/);
+  assert.match(coloring, /getContext\("2d"\)/);
+  assert.doesNotMatch(coloring, /자유 그림|Free draw/);
   assert.match(dots, /lineTo/);
   assert.equal((dots.match(/symbol: "/g) ?? []).length, 5);
   assert.match(popstar, /group\.length \* group\.length/);
   assert.match(popstar, /if \(group\.length < 2\) return/);
   assert.match(running, /runner-character/);
+  assert.match(running, /runner-speed-lines/);
+  assert.match(running, /runner-trees/);
   assert.match(running, /setSeconds\(5\)/);
   assert.match(running, /RECORD_KEY/);
   assert.match(hidden, /camera-frame/);
@@ -100,6 +103,23 @@ test("offers expanded coloring pages, brush sizes, and zoom", async () => {
   assert.match(source, /transform: `scale\(\$\{zoom\}\)`/);
   assert.match(source, /drawContained\(context, outline, 1\)/);
   assert.equal((source.match(/src: "\/coloring\//g) ?? []).length, 14);
+  assert.equal((source.match(/#[0-9A-F]{6}/g) ?? []).length >= 12, true);
+});
+
+test("offers three difficulty levels for longer learning games", async () => {
+  const alphabet = await readFile(new URL("../src/games/alphabet/AlphabetGame.tsx", import.meta.url), "utf8");
+  const numbers = await readFile(new URL("../src/games/numbers/NumberGame.tsx", import.meta.url), "utf8");
+  const animals = await readFile(new URL("../src/games/animals/AnimalGame.tsx", import.meta.url), "utf8");
+  const vehicles = await readFile(new URL("../src/games/vehicles/VehicleGame.tsx", import.meta.url), "utf8");
+  const dinosaurs = await readFile(new URL("../src/games/dinosaurs/DinosaurGame.tsx", import.meta.url), "utf8");
+
+  assert.match(alphabet, /count: 26/);
+  assert.match(numbers, /count: 10/);
+  assert.match(numbers, /count: 30/);
+  assert.match(numbers, /count: 50/);
+  assert.match(animals, /count: 15/);
+  assert.match(vehicles, /count: 15/);
+  assert.match(dinosaurs, /count: 10/);
 });
 
 test("supports compact legacy laptop screens and image-based emoji", async () => {

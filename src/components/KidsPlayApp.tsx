@@ -8,7 +8,6 @@ import { AnimalGame } from "../games/animals/AnimalGame";
 import { ColoringGame } from "../games/coloring/ColoringGame";
 import { ConnectDotsGame } from "../games/connectdots/ConnectDotsGame";
 import { DinosaurGame } from "../games/dinosaurs/DinosaurGame";
-import { DrawingGame } from "../games/drawing/DrawingGame";
 import { HiddenShapeGame } from "../games/hiddenshape/HiddenShapeGame";
 import { JigsawGame } from "../games/jigsaw/JigsawGame";
 import { MazeGame } from "../games/maze/MazeGame";
@@ -42,7 +41,6 @@ const GAME_COMPONENTS = {
   maze: MazeGame,
   jigsaw: JigsawGame,
   addition: AdditionGame,
-  drawing: DrawingGame,
   connectdots: ConnectDotsGame,
   popstar: PopStarGame,
   running: RunningGame,

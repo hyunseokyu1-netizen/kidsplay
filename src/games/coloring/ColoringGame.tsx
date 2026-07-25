@@ -7,7 +7,10 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import type { GameProps } from "../shared";
 import { tx } from "../shared";
 
-const COLORS = ["#F06D87", "#F6B94C", "#61C69D", "#52A9E8", "#9179E8", "#7C523B"];
+const COLORS = [
+  "#222222", "#6D4C41", "#E85D75", "#F38B4A", "#F5C84C", "#72C66B",
+  "#46B99B", "#4EB3D8", "#4D82D8", "#7969D3", "#B963C5", "#F2A8C6",
+];
 const BRUSH_SIZES = [18, 36, 58];
 const BOARD_WIDTH = 620;
 const BOARD_HEIGHT = 390;
@@ -155,7 +158,7 @@ export function ColoringGame({ language, onComplete }: GameProps) {
 
   return (
     <div className="coloring-game">
-      <p className="game-prompt">{tx(language, "그림을 고르고 쓱쓱 색칠해요!", "Choose a picture and paint it!")}</p>
+      <p className="game-prompt">{tx(language, "그림을 고르고 좋아하는 색으로 쓱쓱 칠해요!", "Choose a picture and paint it with your favorite colors!")}</p>
       <div className="coloring-pages" aria-label={tx(language, "색칠 그림 선택", "Choose a coloring page")}>
         {COLORING_PAGES.map((item, index) => (
           <button key={item.src} className={pageIndex === index ? "active" : ""} onClick={() => { resetBoard(); setPageIndex(index); setZoom(1); }}>

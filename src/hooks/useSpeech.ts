@@ -10,6 +10,7 @@ type SafariWindow = Window & typeof globalThis & {
 export function useSpeech(language: Language) {
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const speechRequestRef = useRef(0);
 
   useEffect(() => () => {
     if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
@@ -58,10 +59,17 @@ export function useSpeech(language: Language) {
       utterance.onend = () => { if (utteranceRef.current === utterance) utteranceRef.current = null; };
       utterance.onerror = () => { if (utteranceRef.current === utterance) utteranceRef.current = null; };
 
+      const request = speechRequestRef.current + 1;
+      speechRequestRef.current = request;
       synthesis.cancel();
-      synthesis.resume();
       utteranceRef.current = utterance;
-      synthesis.speak(utterance);
+      const startSpeaking = () => {
+        if (speechRequestRef.current !== request) return;
+        synthesis.resume();
+        synthesis.speak(utterance);
+      };
+      // Older Chrome/Safari can silently discard speech queued in the same tick as cancel().
+      window.setTimeout(startSpeaking, 45);
     },
     [language, playClickSound],
   );

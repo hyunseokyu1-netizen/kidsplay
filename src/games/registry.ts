@@ -14,7 +14,6 @@ export const GAMES: GameInfo[] = [
   { id: "maze", icon: "🧠", title: { ko: "미로 찾기", en: "Maze" }, subtitle: { ko: "길을 따라 도착해요", en: "Find the way out" }, color: "#6CA66A", light: "#EFF8E9" },
   { id: "jigsaw", icon: "🐮", title: { ko: "동물 직소", en: "Animal Jigsaw" }, subtitle: { ko: "동물 조각을 맞춰요", en: "Build an animal" }, color: "#4FA8BE", light: "#EAF8FB" },
   { id: "addition", icon: "🔢", title: { ko: "더하기 카드", en: "Addition Cards" }, subtitle: { ko: "그림을 세어 더해요", en: "Count and add" }, color: "#E19A3F", light: "#FFF6E8" },
-  { id: "drawing", icon: "🎨", title: { ko: "그림 그리기", en: "Drawing" }, subtitle: { ko: "마음껏 그리고 칠해요", en: "Draw with many colors" }, color: "#E06E9F", light: "#FFF0F7" },
   { id: "connectdots", icon: "🔢", title: { ko: "숫자 선 잇기", en: "Connect the Dots" }, subtitle: { ko: "숫자 순서대로 이어요", en: "Connect numbers in order" }, color: "#60A7D8", light: "#ECF7FF" },
   { id: "popstar", icon: "🏅", title: { ko: "별 팡팡", en: "Pop Stars" }, subtitle: { ko: "같은 색 별을 모아요", en: "Pop matching stars" }, color: "#7969D3", light: "#F1EFFF" },
   { id: "running", icon: "🚀", title: { ko: "모양 달리기", en: "Shape Runner" }, subtitle: { ko: "같은 모양을 눌러요", en: "Choose the same shape" }, color: "#50B694", light: "#EAF9F3" },

@@ -1,40 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSpeech } from "../../hooks/useSpeech";
-import { difficultyCount } from "../registry";
 import type { GameProps } from "../shared";
 import { tx } from "../shared";
 
-const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
-const WORDS: Record<string, [string, string]> = {
-  A: ["에이, 사과", "A, apple"], B: ["비, 곰", "B, bear"], C: ["씨, 고양이", "C, cat"], D: ["디, 강아지", "D, dog"],
-  E: ["이, 코끼리", "E, elephant"], F: ["에프, 물고기", "F, fish"], G: ["지, 기린", "G, giraffe"], H: ["에이치, 모자", "H, hat"],
-};
+const LEVELS = [
+  { count: 6, ko: "초급", en: "Beginner" },
+  { count: 13, ko: "중급", en: "Intermediate" },
+  { count: 26, ko: "고급", en: "Advanced" },
+];
+const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const EXAMPLES = [
+  "apple", "bear", "cat", "dog", "elephant", "fish", "giraffe", "hat", "ice cream", "juice", "kite", "lion", "moon",
+  "nest", "orange", "panda", "queen", "rocket", "sun", "turtle", "umbrella", "violin", "whale", "xylophone", "yo-yo", "zebra",
+];
 
-export function AlphabetGame({ age, language, onComplete }: GameProps) {
-  const count = difficultyCount(age, [4, 6, 8]);
-  const letters = LETTERS.slice(0, count);
+function shuffledLetters(letters: string[], seed: number) {
+  return letters.slice().sort((a, b) => ((a.charCodeAt(0) * 13 + seed * 7) % 29) - ((b.charCodeAt(0) * 13 + seed * 7) % 29));
+}
+
+export function AlphabetGame({ language, onComplete }: GameProps) {
+  const [level, setLevel] = useState(0);
   const [step, setStep] = useState(0);
   const speak = useSpeech(language);
-  const target = letters[step % Math.min(3, count)];
+  const letters = useMemo(() => LETTERS.slice(0, LEVELS[level].count), [level]);
+  const target = letters[step];
+  const ordered = useMemo(() => shuffledLetters(letters, level), [letters, level]);
+
+  const changeLevel = (index: number) => {
+    setLevel(index);
+    setStep(0);
+  };
 
   const choose = (letter: string) => {
-    const words = WORDS[letter];
-    speak(words[0], words[1]);
+    const index = LETTERS.indexOf(letter);
+    speak(`${letter}, ${EXAMPLES[index]}`, `${letter}, ${EXAMPLES[index]}`);
     if (letter !== target) return;
-    if (step >= 2) window.setTimeout(onComplete, 600);
+    if (step === letters.length - 1) window.setTimeout(onComplete, 600);
     else setStep(step + 1);
   };
 
   return (
-    <div>
+    <div className={`alphabet-game alphabet-level-${level + 1}`}>
+      <div className="difficulty-tabs">
+        {LEVELS.map((item, index) => (
+          <button key={item.count} className={level === index ? "active" : ""} onClick={() => changeLevel(index)}>
+            {language === "ko" ? item.ko : item.en}<small>{item.count}</small>
+          </button>
+        ))}
+      </div>
+      <div className="level-caption">{step + 1}/{letters.length}</div>
       <p className="game-prompt">{tx(language, `${target}를 찾아 톡!`, `Tap the letter ${target}!`)}</p>
       <button className="listen-bubble" onClick={() => speak(`${target}를 찾아보세요`, `Find the letter ${target}`)}>🔊</button>
       <div className="choice-grid letter-grid">
-        {[...letters].reverse().map((letter) => <button key={letter} className="letter-button" onClick={() => choose(letter)}>{letter}</button>)}
+        {ordered.map((letter) => <button key={letter} className="letter-button" onClick={() => choose(letter)}>{letter}</button>)}
       </div>
     </div>
   );
 }
-

@@ -15,7 +15,6 @@ export type GameId =
   | "maze"
   | "jigsaw"
   | "addition"
-  | "drawing"
   | "connectdots"
   | "popstar"
   | "running"
