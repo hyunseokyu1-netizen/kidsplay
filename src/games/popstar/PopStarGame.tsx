@@ -9,10 +9,21 @@ const COLS = 8;
 const COLORS = ["pink", "blue", "yellow", "green", "purple"];
 type Board = Array<Array<string | null>>;
 
-function makeBoard(): Board {
-  return Array.from({ length: ROWS }, (_, row) =>
-    Array.from({ length: COLS }, (_, col) => COLORS[(Math.floor(row / 2) + Math.floor(col / 2) * 2 + (row > 3 ? 1 : 0)) % COLORS.length]),
+function makeBoard(seed = 20260725): Board {
+  let value = seed >>> 0;
+  const random = () => {
+    value = (value * 1664525 + 1013904223) >>> 0;
+    return value / 4294967296;
+  };
+  const board = Array.from({ length: ROWS }, () =>
+    Array.from({ length: COLS }, () => COLORS[Math.floor(random() * COLORS.length)]),
   );
+  [[0, 1], [1, 5], [2, 2], [3, 6], [4, 0], [5, 4]].forEach(([row, col], index) => {
+    const color = COLORS[(index * 2 + Math.floor(random() * COLORS.length)) % COLORS.length];
+    board[row][col] = color;
+    board[row][Math.min(col + 1, COLS - 1)] = color;
+  });
+  return board;
 }
 
 function groupAt(board: Board, row: number, col: number) {
@@ -42,8 +53,17 @@ function collapse(board: Board) {
   return Array.from({ length: ROWS }, (_, row) => columns.map((column) => column[row]));
 }
 
+function hasMove(board: Board) {
+  for (let row = 0; row < ROWS; row += 1) {
+    for (let col = 0; col < COLS; col += 1) {
+      if (board[row][col] && groupAt(board, row, col).length >= 2) return true;
+    }
+  }
+  return false;
+}
+
 export function PopStarGame({ age, language, onComplete }: GameProps) {
-  const [board, setBoard] = useState<Board>(makeBoard);
+  const [board, setBoard] = useState<Board>(() => makeBoard());
   const [score, setScore] = useState(0);
   const target = age === "toddler" ? 180 : age === "preschool" ? 320 : 480;
   const remaining = useMemo(() => board.reduce((total, row) => total + row.filter(Boolean).length, 0), [board]);
@@ -54,9 +74,11 @@ export function PopStarGame({ age, language, onComplete }: GameProps) {
     const next = board.map((line) => line.slice());
     group.forEach(([groupRow, groupCol]) => { next[groupRow][groupCol] = null; });
     const newScore = score + group.length * group.length * 5;
-    setBoard(collapse(next));
+    const collapsed = collapse(next);
+    setBoard(collapsed);
     setScore(newScore);
     if (newScore >= target || remaining - group.length === 0) window.setTimeout(onComplete, 550);
+    else if (!hasMove(collapsed)) window.setTimeout(() => setBoard(makeBoard(newScore + remaining * 97)), 420);
   };
 
   return (

@@ -12,10 +12,20 @@ const HEIGHT = 390;
 const COLORS = ["#222222", "#6D4C41", "#E85D75", "#F38B4A", "#F5C84C", "#72C66B", "#46B99B", "#4EB3D8", "#4D82D8", "#7969D3", "#B963C5", "#F2A8C6"];
 const SIZES = [10, 24, 44];
 const TEMPLATES = [
-  { src: "", ko: "자유 그림", en: "Free draw" },
   { src: "/coloring/butterfly.svg", ko: "나비", en: "Butterfly" },
   { src: "/coloring/car.svg", ko: "자동차", en: "Car" },
   { src: "/coloring/flower.svg", ko: "꽃", en: "Flower" },
+  { src: "/coloring/fish.svg", ko: "물고기", en: "Fish" },
+  { src: "/coloring/cat.svg", ko: "고양이", en: "Cat" },
+  { src: "/coloring/dog.svg", ko: "강아지", en: "Dog" },
+  { src: "/coloring/rocket.svg", ko: "로켓", en: "Rocket" },
+  { src: "/coloring/train.svg", ko: "기차", en: "Train" },
+  { src: "/coloring/airplane.svg", ko: "비행기", en: "Airplane" },
+  { src: "/coloring/castle.svg", ko: "성", en: "Castle" },
+  { src: "/coloring/robot.svg", ko: "로봇", en: "Robot" },
+  { src: "/coloring/owl.svg", ko: "부엉이", en: "Owl" },
+  { src: "/coloring/elephant.svg", ko: "코끼리", en: "Elephant" },
+  { src: "/coloring/hen.svg", ko: "암탉", en: "Hen" },
 ];
 
 export function DrawingGame({ language, onComplete }: GameProps) {
@@ -93,7 +103,7 @@ export function DrawingGame({ language, onComplete }: GameProps) {
         </div>
         <div className="drawing-paper">
           <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={stop} onMouseLeave={stop} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={stop} />
-          {TEMPLATES[template].src && <img src={TEMPLATES[template].src} alt="" draggable={false} />}
+          <img src={TEMPLATES[template].src} alt="" draggable={false} />
         </div>
         <div className="drawing-colors">
           {COLORS.map((item) => <button key={item} className={color === item && !eraser ? "active" : ""} style={{ background: item }} onClick={() => { setColor(item); setEraser(false); }} aria-label={item} />)}

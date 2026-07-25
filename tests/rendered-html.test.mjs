@@ -61,15 +61,34 @@ test("ships the requested interactive game mechanics", async () => {
   const popstar = await readFile(new URL("../src/games/popstar/PopStarGame.tsx", import.meta.url), "utf8");
   const running = await readFile(new URL("../src/games/running/RunningGame.tsx", import.meta.url), "utf8");
   const hidden = await readFile(new URL("../src/games/hiddenshape/HiddenShapeGame.tsx", import.meta.url), "utf8");
+  const memory = await readFile(new URL("../src/games/memory/MemoryGame.tsx", import.meta.url), "utf8");
+  const puzzle = await readFile(new URL("../src/games/puzzle/PuzzleGame.tsx", import.meta.url), "utf8");
 
   assert.match(maze, /findPath/);
+  assert.match(maze, /TOTAL_LEVELS = 10/);
+  assert.match(maze, /gridTemplateRows/);
   assert.match(jigsaw, /onDrop/);
+  assert.equal((jigsaw.match(/symbol: "/g) ?? []).length, 12);
+  assert.match(jigsaw, /jigsaw-reference/);
   assert.match(addition, /values\.left \+ values\.right/);
+  assert.match(addition, /TOTAL_ROUNDS = 10/);
+  assert.match(addition, /answerPositions/);
   assert.match(drawing, /getContext\("2d"\)/);
+  assert.doesNotMatch(drawing, /자유 그림|Free draw/);
   assert.match(dots, /lineTo/);
+  assert.equal((dots.match(/symbol: "/g) ?? []).length, 5);
   assert.match(popstar, /group\.length \* group\.length/);
+  assert.match(popstar, /if \(group\.length < 2\) return/);
   assert.match(running, /runner-character/);
+  assert.match(running, /setSeconds\(5\)/);
+  assert.match(running, /RECORD_KEY/);
   assert.match(hidden, /camera-frame/);
+  assert.match(hidden, /TARGETS = \[1, 3, 0, 4, 2, 5, 6, 3, 7, 1\]/);
+  assert.match(hidden, /speak\(`\$\{name\.ko\}를 찾아보세요`/);
+  assert.match(memory, /cards: 8/);
+  assert.match(memory, /cards: 16/);
+  assert.match(memory, /cards: 32/);
+  assert.match(puzzle, /\[4, 6, 8, 10, 12\]/);
 });
 
 test("offers expanded coloring pages, brush sizes, and zoom", async () => {

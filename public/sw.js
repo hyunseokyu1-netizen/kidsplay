@@ -1,4 +1,4 @@
-const CACHE_NAME = "kidsplay-v3";
+const CACHE_NAME = "kidsplay-v4";
 const CORE_FILES = ["/", "/manifest.webmanifest", "/favicon.svg"];
 
 self.addEventListener("install", (event) => {
