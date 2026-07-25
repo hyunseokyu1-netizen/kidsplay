@@ -31,7 +31,7 @@ KidsPlay는 **2~7세 아이들**을 위한 교육용 웹 게임 플랫폼입니�
 
 ### 화면
 
-![KidsPlay 색칠 놀이 화면](docs/screenshots/coloring-play.png)
+![KidsPlay 색칠 놀이 화면](docs/screenshots/coloring-play-v2.png)
 
 ### 체험하기
 
@@ -80,7 +80,7 @@ To leave Kids Mode, an adult holds the lock button for one second and answers a 
 
 ### Screenshot
 
-![KidsPlay coloring activity](docs/screenshots/coloring-play.png)
+![KidsPlay coloring activity](docs/screenshots/coloring-play-v2.png)
 
 ### Live demo
 
