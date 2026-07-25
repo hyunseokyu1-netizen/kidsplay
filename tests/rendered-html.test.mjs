@@ -122,6 +122,17 @@ test("offers three difficulty levels for longer learning games", async () => {
   assert.match(dinosaurs, /count: 10/);
 });
 
+test("loads browser voices and starts speech inside the original click", async () => {
+  const speech = await readFile(new URL("../src/hooks/useSpeech.ts", import.meta.url), "utf8");
+
+  assert.match(speech, /addEventListener\("voiceschanged", updateVoices\)/);
+  assert.match(speech, /if \(matchingVoice && !useDefaultVoice\) utterance\.voice = matchingVoice/);
+  assert.match(speech, /synthesis\.speak\(utterance\)/);
+  assert.match(speech, /startSpeaking\(\);\s*$/m);
+  assert.doesNotMatch(speech, /utterance\.voice\s*=\s*.*\|\|\s*null/);
+  assert.doesNotMatch(speech, /setTimeout\(startSpeaking,\s*45\)/);
+});
+
 test("supports compact legacy laptop screens and image-based emoji", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   const app = await readFile(new URL("../src/components/KidsPlayApp.tsx", import.meta.url), "utf8");

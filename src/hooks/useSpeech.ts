@@ -11,10 +11,32 @@ export function useSpeech(language: Language) {
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const speechRequestRef = useRef(0);
+  const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
+  const pendingVoiceRetryRef = useRef<(() => void) | null>(null);
 
-  useEffect(() => () => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
-    if (audioContextRef.current) void audioContextRef.current.close();
+  useEffect(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+    const synthesis = window.speechSynthesis;
+    const updateVoices = () => {
+      const voices = synthesis.getVoices();
+      if (voices.length === 0) return;
+
+      voicesRef.current = voices;
+      const retry = pendingVoiceRetryRef.current;
+      pendingVoiceRetryRef.current = null;
+      retry?.();
+    };
+
+    updateVoices();
+    synthesis.addEventListener("voiceschanged", updateVoices);
+
+    return () => {
+      synthesis.removeEventListener("voiceschanged", updateVoices);
+      pendingVoiceRetryRef.current = null;
+      synthesis.cancel();
+      if (audioContextRef.current) void audioContextRef.current.close();
+    };
   }, []);
 
   const playClickSound = useCallback(() => {
@@ -45,31 +67,67 @@ export function useSpeech(language: Language) {
       if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
 
       const synthesis = window.speechSynthesis;
-      const voices = synthesis.getVoices();
-      const koreanVoice = voices.find((voice) => /^ko([-_]|$)/i.test(voice.lang));
-      const englishVoice = voices.find((voice) => /^en([-_]|$)/i.test(voice.lang));
-      const canSpeakKorean = language === "ko" && (Boolean(koreanVoice) || voices.length === 0);
-      const utterance = new SpeechSynthesisUtterance(canSpeakKorean ? ko : en);
-
-      utterance.lang = canSpeakKorean ? "ko-KR" : "en-US";
-      utterance.rate = 0.86;
-      utterance.pitch = 1.12;
-      utterance.volume = 1;
-      utterance.voice = canSpeakKorean ? koreanVoice || null : englishVoice || null;
-      utterance.onend = () => { if (utteranceRef.current === utterance) utteranceRef.current = null; };
-      utterance.onerror = () => { if (utteranceRef.current === utterance) utteranceRef.current = null; };
-
       const request = speechRequestRef.current + 1;
       speechRequestRef.current = request;
-      synthesis.cancel();
-      utteranceRef.current = utterance;
-      const startSpeaking = () => {
+      let started = false;
+      let activeAttempt = 0;
+
+      const currentVoices = synthesis.getVoices();
+      if (currentVoices.length > 0) voicesRef.current = currentVoices;
+
+      const startSpeaking = (useDefaultVoice = false) => {
         if (speechRequestRef.current !== request) return;
+
+        const attempt = activeAttempt + 1;
+        activeAttempt = attempt;
+        const isKorean = language === "ko";
+        const locale = isKorean ? "ko-KR" : "en-US";
+        const matchingVoice = voicesRef.current.find((voice) => {
+          const normalized = voice.lang.replace("_", "-");
+          return normalized.toLowerCase().startsWith(locale.slice(0, 2).toLowerCase());
+        });
+        const utterance = new SpeechSynthesisUtterance(isKorean ? ko : en);
+
+        utterance.lang = locale;
+        utterance.rate = 0.86;
+        utterance.pitch = 1.12;
+        utterance.volume = 1;
+        // Assigning null to voice can make Chrome/Safari silently discard speech.
+        if (matchingVoice && !useDefaultVoice) utterance.voice = matchingVoice;
+        utterance.onstart = () => {
+          if (speechRequestRef.current !== request || attempt !== activeAttempt) return;
+          started = true;
+          pendingVoiceRetryRef.current = null;
+        };
+        utterance.onend = () => {
+          if (utteranceRef.current === utterance) utteranceRef.current = null;
+        };
+        utterance.onerror = (event) => {
+          if (utteranceRef.current === utterance) utteranceRef.current = null;
+          if (speechRequestRef.current !== request || attempt !== activeAttempt) return;
+
+          console.warn("KidsPlay speech synthesis failed:", event.error);
+          if (!started && matchingVoice && !useDefaultVoice) {
+            window.setTimeout(() => startSpeaking(true), 0);
+          }
+        };
+
+        if (synthesis.speaking || synthesis.pending) synthesis.cancel();
         synthesis.resume();
         synthesis.speak(utterance);
+        utteranceRef.current = utterance;
       };
-      // Older Chrome/Safari can silently discard speech queued in the same tick as cancel().
-      window.setTimeout(startSpeaking, 45);
+
+      if (voicesRef.current.length === 0) {
+        pendingVoiceRetryRef.current = () => {
+          if (!started && speechRequestRef.current === request) startSpeaking();
+        };
+      } else {
+        pendingVoiceRetryRef.current = null;
+      }
+
+      // Keep this in the original click call stack so Chrome accepts the speech request.
+      startSpeaking();
     },
     [language, playClickSound],
   );
