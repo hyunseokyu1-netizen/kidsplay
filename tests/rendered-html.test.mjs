@@ -122,14 +122,18 @@ test("offers three difficulty levels for longer learning games", async () => {
   assert.match(dinosaurs, /count: 10/);
 });
 
-test("loads browser voices and starts speech inside the original click", async () => {
+test("prefers local browser voices and safely resets Chrome's speech queue", async () => {
   const speech = await readFile(new URL("../src/hooks/useSpeech.ts", import.meta.url), "utf8");
 
   assert.match(speech, /addEventListener\("voiceschanged", updateVoices\)/);
+  assert.match(speech, /voice\.localService \? 4 : 0/);
   assert.match(speech, /if \(matchingVoice && !useDefaultVoice\) utterance\.voice = matchingVoice/);
+  assert.match(speech, /window\.setTimeout\(enqueue, SPEECH_QUEUE_DELAY_MS\)/);
+  assert.match(speech, /SPEECH_START_TIMEOUT_MS/);
   assert.match(speech, /synthesis\.speak\(utterance\)/);
   assert.match(speech, /startSpeaking\(\);\s*$/m);
   assert.doesNotMatch(speech, /utterance\.voice\s*=\s*.*\|\|\s*null/);
+  assert.doesNotMatch(speech, /synthesis\.cancel\(\);\s*synthesis\.speak\(utterance\)/);
   assert.doesNotMatch(speech, /setTimeout\(startSpeaking,\s*45\)/);
 });
 
