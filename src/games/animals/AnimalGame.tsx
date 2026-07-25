@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { EmojiIcon } from "../../components/EmojiIcon";
 import { useSpeech } from "../../hooks/useSpeech";
 import { difficultyCount } from "../registry";
 import type { GameProps } from "../shared";
@@ -35,7 +36,7 @@ export function AnimalGame({ age, language, onComplete }: GameProps) {
       <p className="game-prompt">{tx(language, "어떤 동물의 소리일까요?", "Which animal makes this sound?")}</p>
       <button className="sound-orb" onClick={() => speak(target.ko, target.en)} aria-label={tx(language, "동물 소리 다시 듣기", "Play animal sound again")}>🔊<small>{tx(language, "다시 듣기", "Listen")}</small></button>
       <div className="choice-grid animal-grid">
-        {[...animals].reverse().map((animal) => <button key={animal.icon} className="animal-button" onClick={() => choose(animal.icon)}>{animal.icon}</button>)}
+        {[...animals].reverse().map((animal) => <button key={animal.icon} className="animal-button" onClick={() => choose(animal.icon)}><EmojiIcon symbol={animal.icon} /></button>)}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { EmojiIcon } from "../../components/EmojiIcon";
 import { difficultyCount } from "../registry";
 import type { GameProps } from "../shared";
 import { tx } from "../shared";
@@ -43,7 +44,7 @@ export function MemoryGame({ age, language, onComplete }: GameProps) {
           const visible = open.includes(card.id) || matched.includes(card.icon);
           return (
             <button key={card.id} className={`memory-card ${visible ? "open" : ""}`} disabled={visible || open.length === 2} onClick={() => flip(card.id)}>
-              <span>{visible ? card.icon : "?"}</span>
+              <span>{visible ? <EmojiIcon symbol={card.icon} /> : "?"}</span>
             </button>
           );
         })}

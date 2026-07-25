@@ -20,6 +20,7 @@ KidsPlay는 **2~7세 아이들**을 위한 교육용 웹 게임 플랫폼입니�
 - 별, 스티커와 기기 내 진행 기록 저장
 - 마우스, 터치, 키보드로 조작 가능
 - PWA 및 오프라인 실행 지원
+- 1366×768 구형 노트북용 한 화면 레이아웃과 로컬 그림 아이콘
 - 광고와 외부 링크 없이 아이가 놀이에 집중할 수 있는 화면
 
 ### 아이를 위한 안전 설계
@@ -66,6 +67,7 @@ KidsPlay is an educational web game platform for **children ages 2–7**. It is 
 - Stars, stickers, and progress stored on the current device
 - Mouse, touch, and keyboard controls
 - PWA installation and offline support
+- A single-screen layout and bundled picture icons for older 1366×768 laptops
 - A focused child-friendly interface with no ads or external links
 
 ### Parent-friendly safety

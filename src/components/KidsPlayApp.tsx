@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { EmojiIcon } from "./EmojiIcon";
 import { AlphabetGame } from "../games/alphabet/AlphabetGame";
 import { AnimalGame } from "../games/animals/AnimalGame";
 import { ColoringGame } from "../games/coloring/ColoringGame";
@@ -56,14 +57,18 @@ function ParentScreen({
           <div className="mascot-scene" aria-hidden="true">
             <span className="cloud cloud-one">☁</span><span className="cloud cloud-two">☁</span>
             <div className="sun">☀</div>
-            <div className="mascot">🦕</div>
-            <div className="ground"><span>🌼</span><span>🌷</span><span>🌼</span></div>
+            <div className="mascot"><EmojiIcon symbol="🦕" /></div>
+            <div className="ground"><EmojiIcon symbol="🌼" /><EmojiIcon symbol="🌷" /><EmojiIcon symbol="🌼" /></div>
           </div>
           <h1>{tx(language, "우리 아이의 작은 놀이터", "A little playground for your child")}</h1>
           <p>{tx(language, "누르고, 듣고, 생각하며 즐겁게 배워요.", "Tap, listen, think, and learn through play.")}</p>
           <div className="progress-card">
             <span>⭐ <strong>{progress.stars}</strong> {tx(language, "별", "stars")}</span>
-            <span>{progress.stickers.length ? progress.stickers.join(" ") : "🌱"}</span>
+            <span className="sticker-row">
+              {progress.stickers.length
+                ? progress.stickers.map((sticker) => <EmojiIcon key={sticker} symbol={sticker} />)
+                : <EmojiIcon symbol="🌱" />}
+            </span>
           </div>
         </section>
 
@@ -98,9 +103,9 @@ function ParentScreen({
           <fieldset>
             <legend><span>3</span>{tx(language, "먼저 할 놀이", "Choose a first activity")} <small>{tx(language, "선택", "optional")}</small></legend>
             <div className="game-picker">
-              <button className={selectedGame === null ? "active" : ""} onClick={() => onSelectGame(null)}>🏡<small>{tx(language, "놀이터", "Playground")}</small></button>
+              <button className={selectedGame === null ? "active" : ""} onClick={() => onSelectGame(null)}><EmojiIcon symbol="🏡" /><small>{tx(language, "놀이터", "Playground")}</small></button>
               {GAMES.map((game) => (
-                <button key={game.id} className={selectedGame === game.id ? "active" : ""} onClick={() => onSelectGame(game.id)}>{game.icon}<small>{game.title[language]}</small></button>
+                <button key={game.id} className={selectedGame === game.id ? "active" : ""} onClick={() => onSelectGame(game.id)}><EmojiIcon symbol={game.icon} /><small>{game.title[language]}</small></button>
               ))}
             </div>
           </fieldset>
@@ -140,7 +145,7 @@ function KidsHub({ language, progress, onChoose }: { language: Language; progres
   return (
     <main className="kids-hub">
       <div className="hub-title">
-        <span className="hello-mascot">🐣</span>
+        <span className="hello-mascot"><EmojiIcon symbol="🐣" /></span>
         <div><p>{tx(language, "안녕, 꼬마 탐험가!", "Hello, little explorer!")}</p><h1>{tx(language, "오늘은 무엇을 해볼까?", "What shall we play today?")}</h1></div>
       </div>
       <div className="game-grid">
@@ -152,7 +157,7 @@ function KidsHub({ language, progress, onChoose }: { language: Language; progres
             onMouseEnter={() => undefined}
             onClick={() => { speak(game.title.ko, game.title.en); onChoose(game.id); }}
           >
-            <span className="game-icon">{game.icon}</span>
+            <span className="game-icon"><EmojiIcon symbol={game.icon} /></span>
             <span className="game-copy"><strong>{game.title[language]}</strong><small>{game.subtitle[language]}</small></span>
             <span className="card-stars">{progress.completed[game.id] ? "★" : "☆"}</span>
           </button>
@@ -170,8 +175,8 @@ function GameStage({ gameId, settings, progress, onHome, onComplete, onExitReque
     <div className="game-page" style={{ "--game-color": game.color, "--game-light": game.light } as React.CSSProperties}>
       <KidHeader language={settings.language} remaining={remaining} progress={progress} onExitRequest={onExitRequest} />
       <div className="game-toolbar">
-        <button className="home-button" onClick={onHome} aria-label={tx(settings.language, "놀이터로 가기", "Go to playground")}>🏠</button>
-        <div className="game-title-pill"><span>{game.icon}</span><strong>{game.title[settings.language]}</strong></div>
+        <button className="home-button" onClick={onHome} aria-label={tx(settings.language, "놀이터로 가기", "Go to playground")}><EmojiIcon symbol="🏠" /></button>
+        <div className="game-title-pill"><span><EmojiIcon symbol={game.icon} /></span><strong>{game.title[settings.language]}</strong></div>
         <div className="round-dots"><span className="active" /><span /><span /></div>
       </div>
       <main className="game-surface"><Component age={settings.age} language={settings.language} onComplete={onComplete} /></main>
@@ -235,12 +240,12 @@ function SuccessCard({ language, stars, sticker, onNext, onHome }: { language: L
     <div className="modal-backdrop success-backdrop" role="dialog" aria-modal="true">
       <div className="success-card">
         <div className="confetti" aria-hidden="true">●　▲　★　●　▲</div>
-        <span className="success-mascot">🦄</span>
+        <span className="success-mascot"><EmojiIcon symbol="🦄" /></span>
         <h2>{tx(language, "정말 잘했어요!", "Wonderful job!")}</h2>
         <div className="earned-stars">{Array.from({ length: stars }, (_, index) => <span key={index}>★</span>)}</div>
-        {sticker && <p className="new-sticker">{tx(language, "새 스티커!", "New sticker!")} <span>{sticker}</span></p>}
+        {sticker && <p className="new-sticker">{tx(language, "새 스티커!", "New sticker!")} <span><EmojiIcon symbol={sticker} /></span></p>}
         <div className="success-actions">
-          <button className="soft-button" onClick={onHome}>🏠 {tx(language, "놀이터", "Playground")}</button>
+          <button className="soft-button" onClick={onHome}><EmojiIcon symbol="🏠" /> {tx(language, "놀이터", "Playground")}</button>
           <button className="next-button" onClick={onNext}>{tx(language, "다음 놀이", "Next game")} <span>▶</span></button>
         </div>
       </div>

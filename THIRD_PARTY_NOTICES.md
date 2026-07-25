@@ -18,3 +18,12 @@ KidsPlay의 색칠 놀이 선화는 [Openclipart](https://openclipart.org/)에�
 - Robot by david_ng — https://openclipart.org/detail/214199/robot
 
 라이선스 안내: https://openclipart.org/share
+
+## Twemoji
+
+구형 운영체제에서도 그림이 깨지지 않도록 게임 아이콘 일부에
+[Twemoji](https://github.com/twitter/twemoji) 그래픽을 사용했습니다.
+
+- Copyright 2019 Twitter, Inc and other contributors
+- Graphics licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- 원본 그래픽을 수정하지 않고 필요한 SVG 파일만 프로젝트에 포함했습니다.

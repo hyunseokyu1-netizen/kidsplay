@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element -- Plain local images keep canvas overlays compatible with legacy browsers. */
+
 import { useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { GameProps } from "../shared";
@@ -144,7 +145,7 @@ export function ColoringGame({ language, onComplete }: GameProps) {
     if (!context) return;
     context.drawImage(canvas, 0, 0);
     context.globalCompositeOperation = "multiply";
-    drawContained(context, outline, zoom);
+    drawContained(context, outline, 1);
     context.globalCompositeOperation = "source-over";
     const link = document.createElement("a");
     link.download = `kidsplay-${page.en.toLowerCase()}.png`;
@@ -158,13 +159,13 @@ export function ColoringGame({ language, onComplete }: GameProps) {
       <div className="coloring-pages" aria-label={tx(language, "색칠 그림 선택", "Choose a coloring page")}>
         {COLORING_PAGES.map((item, index) => (
           <button key={item.src} className={pageIndex === index ? "active" : ""} onClick={() => { resetBoard(); setPageIndex(index); setZoom(1); }}>
-            <span>{item.icon}</span><small>{language === "ko" ? item.ko : item.en}</small>
+            <span><img src={item.src} alt="" draggable={false} /></span><small>{language === "ko" ? item.ko : item.en}</small>
           </button>
         ))}
       </div>
       <div className="coloring-workspace">
         <div className="brush-toolbar" aria-label={tx(language, "붓 크기", "Brush size")}>
-          <span className="tool-icon">🖌️</span><small>{tx(language, "붓 크기", "Brush")}</small>
+          <span className="tool-icon">✎</span><small>{tx(language, "붓 크기", "Brush")}</small>
           {BRUSH_SIZES.map((size, index) => (
             <button key={size} className={brushSize === size ? "active" : ""} onClick={() => setBrushSize(size)} aria-label={tx(language, `${["작은", "보통", "큰"][index]} 붓`, `${["Small", "Medium", "Large"][index]} brush`)}>
               <span className="brush-preview" style={{ width: Math.max(10, size * 0.48), height: Math.max(10, size * 0.48) }} />
@@ -172,22 +173,24 @@ export function ColoringGame({ language, onComplete }: GameProps) {
           ))}
         </div>
         <div className="coloring-board">
-          <canvas
-            ref={canvasRef}
-            width={BOARD_WIDTH}
-            height={BOARD_HEIGHT}
-            className="coloring-canvas"
-            onPointerDown={startPainting}
-            onPointerMove={continuePainting}
-            onPointerUp={stopPainting}
-            onPointerCancel={stopPainting}
-            onPointerLeave={stopPainting}
-            aria-label={tx(language, `${page.ko} 색칠 도화지`, `${page.en} coloring canvas`)}
-          />
-          <Image ref={outlineRef} key={page.src} src={page.src} alt="" fill sizes="620px" unoptimized draggable={false} className="coloring-outline" style={{ objectFit: "contain", transform: `scale(${BASE_IMAGE_SCALE * zoom})` }} />
+          <div className="coloring-zoom-layer" style={{ transform: `scale(${zoom})` }}>
+            <canvas
+              ref={canvasRef}
+              width={BOARD_WIDTH}
+              height={BOARD_HEIGHT}
+              className="coloring-canvas"
+              onPointerDown={startPainting}
+              onPointerMove={continuePainting}
+              onPointerUp={stopPainting}
+              onPointerCancel={stopPainting}
+              onPointerLeave={stopPainting}
+              aria-label={tx(language, `${page.ko} 색칠 도화지`, `${page.en} coloring canvas`)}
+            />
+            <img ref={outlineRef} key={page.src} src={page.src} alt="" draggable={false} className="coloring-outline" style={{ transform: `scale(${BASE_IMAGE_SCALE})` }} />
+          </div>
         </div>
         <div className="zoom-toolbar" aria-label={tx(language, "그림 확대와 축소", "Picture zoom")}>
-          <span className="tool-icon">🔍</span><small>{tx(language, "그림 크기", "Zoom")}</small>
+          <span className="tool-icon">＋</span><small>{tx(language, "그림 크기", "Zoom")}</small>
           <button disabled={zoom <= 0.7} onClick={() => setZoom(Math.max(0.7, Number((zoom - 0.1).toFixed(1))))} aria-label={tx(language, "축소", "Zoom out")}>−</button>
           <strong>{Math.round(zoom * 100)}%</strong>
           <button disabled={zoom >= 1.5} onClick={() => setZoom(Math.min(1.5, Number((zoom + 0.1).toFixed(1))))} aria-label={tx(language, "확대", "Zoom in")}>＋</button>
@@ -197,7 +200,7 @@ export function ColoringGame({ language, onComplete }: GameProps) {
         {COLORS.map((item) => (
           <button key={item} className={`color-dot ${color === item && !isEraser ? "selected" : ""}`} style={{ background: item }} onClick={() => { setColor(item); setIsEraser(false); }} aria-label={item} />
         ))}
-        <button className={`eraser-button ${isEraser ? "selected" : ""}`} onClick={() => setIsEraser(true)} aria-label={tx(language, "지우개", "Eraser")}><span>🧽</span><small>{tx(language, "지우개", "Eraser")}</small></button>
+        <button className={`eraser-button ${isEraser ? "selected" : ""}`} onClick={() => setIsEraser(true)} aria-label={tx(language, "지우개", "Eraser")}><span>⌫</span><small>{tx(language, "지우개", "Eraser")}</small></button>
       </div>
       <div className="small-actions coloring-actions">
         <button className="soft-button" onClick={autoPaint}>✨ {tx(language, "자동 색칠", "Magic paint")}</button>

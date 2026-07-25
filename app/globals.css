@@ -11,6 +11,7 @@
 * { box-sizing: border-box; }
 
 html, body { min-height: 100%; margin: 0; }
+.emoji-icon { display: inline-block; width: 1em; height: 1em; object-fit: contain; vertical-align: -.12em; pointer-events: none; }
 
 body {
   background: #fff9ef;
@@ -65,10 +66,12 @@ button:active { transform: translateY(3px) scale(0.98); }
 .sun { position: absolute; top: 24px; right: 12%; color: #f8bf4b; font-size: 70px; animation: sun-wiggle 8s ease-in-out infinite; }
 .cloud { position: absolute; color: #fff; font-size: 74px; opacity: .92; }
 .cloud-one { top: 20px; left: 1%; }.cloud-two { top: 105px; right: 0; font-size: 54px; }
-.ground { position: absolute; right: -70px; bottom: 0; left: -70px; height: 68px; padding-top: 12px; word-spacing: 50px; background: #92c982; border-radius: 50% 50% 0 0; }
+.ground { position: absolute; right: -70px; bottom: 0; left: -70px; display: flex; align-items: flex-start; justify-content: center; height: 68px; padding-top: 12px; background: #92c982; border-radius: 50% 50% 0 0; }
+.ground .emoji-icon { width: 26px; height: 26px; margin: 0 18px; }
 .welcome-panel h1 { max-width: 430px; margin: 18px 0 10px; font-size: clamp(30px, 3.5vw, 45px); line-height: 1.18; letter-spacing: -2px; }
 .welcome-panel > p { max-width: 400px; margin: 0; color: #74675e; font-family: Arial, sans-serif; font-size: 17px; line-height: 1.6; }
 .progress-card { display: flex; justify-content: space-between; width: min(380px, 100%); min-height: 60px; margin-top: 26px; padding: 15px 22px; background: rgba(255,255,255,.75); border: 2px solid rgba(255,255,255,.9); border-radius: 22px; }
+.sticker-row { display: flex; align-items: center; }.sticker-row .emoji-icon { width: 25px; height: 25px; margin-left: 4px; }
 
 .setup-panel { padding: 42px 54px 34px; overflow: hidden; }
 .setup-heading { display: flex; align-items: center; justify-content: space-between; }
@@ -87,6 +90,7 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 .segment-control button.active { color: #4e446e; background: #fff; box-shadow: 0 5px 14px rgba(74, 61, 49, .1); }
 .game-picker { display: flex; padding: 4px 2px 11px; overflow-x: auto; scrollbar-color: #d9d0c7 transparent; }
 .game-picker button { flex: 0 0 82px; height: 82px; margin-right: 9px; padding: 8px 4px; background: #faf8f4; border: 2px solid transparent; border-radius: 19px; font-size: 27px; }
+.game-picker button > .emoji-icon { display: block; margin: 0 auto; }
 .game-picker button.active { background: #f0edff; border-color: #8a78db; box-shadow: 0 6px 12px rgba(100, 81, 183, .13); }
 .game-picker small { display: block; max-width: 72px; margin-top: 5px; overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
 .start-button { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 80px; padding: 16px 24px; color: #fff; background: linear-gradient(135deg, #7565cf, #6353bd); border: 0; border-radius: 22px; box-shadow: 0 9px 0 #4f429a, 0 18px 26px rgba(85, 68, 170, .22); font-size: 22px; }
@@ -121,6 +125,7 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 .game-page { background: var(--game-light); }
 .game-toolbar { display: grid; grid-template-columns: 90px 1fr 90px; align-items: center; min-height: 108px; padding: 12px clamp(25px, 6vw, 90px); }
 .home-button { width: 82px; height: 82px; background: #fff; border: 3px solid rgba(255,255,255,.8); border-radius: 26px; box-shadow: 0 7px 0 rgba(76, 62, 53, .12); font-size: 36px; }
+.home-button .emoji-icon { width: 1.05em; height: 1.05em; }
 .game-title-pill { display: flex; align-items: center; justify-content: center; justify-self: center; min-height: 70px; padding: 10px 32px; background: #fff; border: 3px solid var(--game-color); border-radius: 99px; box-shadow: 0 7px 0 rgba(76, 62, 53, .1); }
 .game-title-pill span { margin-right: 12px; font-size: 38px; }.game-title-pill strong { font-size: 25px; }
 .round-dots { display: flex; justify-content: flex-end; }.round-dots span { width: 12px; height: 12px; margin-left: 7px; background: #ddd4ca; border-radius: 50%; }.round-dots .active { width: 31px; background: var(--game-color); border-radius: 10px; }
@@ -129,11 +134,12 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 
 .coloring-pages { display: flex; width: min(720px, 100%); margin: 0 auto 13px; padding: 3px 3px 9px; overflow-x: auto; }
 .coloring-pages button { flex: 0 0 84px; min-height: 74px; margin: 0 5px; padding: 6px 4px; background: #fff9ed; border: 3px solid transparent; border-radius: 18px; }
-.coloring-pages button.active { background: #f1edff; border-color: #8774dc; box-shadow: 0 5px 0 #d1c8f1; }.coloring-pages span { display: block; font-size: 31px; }.coloring-pages small { display: block; margin-top: 2px; font-size: 10px; }
+.coloring-pages button.active { background: #f1edff; border-color: #8774dc; box-shadow: 0 5px 0 #d1c8f1; }.coloring-pages span { display: block; height: 34px; }.coloring-pages span img { width: 38px; height: 34px; object-fit: contain; }.coloring-pages small { display: block; margin-top: 2px; font-size: 10px; }
 .coloring-workspace { display: grid; grid-template-columns: 82px minmax(0, 620px) 82px; align-items: center; justify-content: center; gap: 10px; width: 100%; margin: auto; }
 .coloring-board { position: relative; width: 100%; overflow: hidden; background: #fff; border: 4px dashed #ead9be; border-radius: 26px; }
+.coloring-zoom-layer { position: relative; width: 100%; transform-origin: center; }
 .coloring-canvas { display: block; width: 100%; height: auto; background: #fff; cursor: crosshair; touch-action: none; }
-.coloring-outline { z-index: 2; object-fit: contain; pointer-events: none; mix-blend-mode: multiply; transform-origin: center; }
+.coloring-outline { position: absolute; z-index: 2; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; mix-blend-mode: multiply; transform-origin: center; }
 .brush-toolbar, .zoom-toolbar { display: flex; flex-direction: column; align-items: center; padding: 10px 7px 13px; background: #fff9ed; border: 3px solid #f0e3cd; border-radius: 23px; box-shadow: 0 6px 0 #e2d5c3; }
 .tool-icon { font-size: 24px; }.brush-toolbar > small, .zoom-toolbar > small { margin: 2px 0 9px; color: #80736b; font-size: 9px; }
 .brush-toolbar button, .zoom-toolbar button { display: grid; place-items: center; width: 58px; height: 58px; margin: 4px 0; background: #fff; border: 3px solid #e5ddd4; border-radius: 18px; box-shadow: 0 4px 0 #d7cec5; }
@@ -168,13 +174,13 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 
 .dino-grid { grid-template-columns: repeat(3, 1fr); max-width: 800px; }.dino-button { min-height: 220px; padding: 15px; background: #eff9e8; border: 5px solid #fff; border-radius: 35px; box-shadow: 0 9px 0 #c7debd; font-size: 100px; }.dino-button small { display: block; min-height: 34px; font-size: 13px; }
 .bone-board { display: flex; justify-content: center; min-height: 160px; margin: 0 auto 18px; padding: 30px; background: #674f3e; border: 10px solid #b88b59; border-radius: 34px; }.bone-board span { margin: 8px; opacity: .12; font-size: 70px; }.bone-board span.found { opacity: 1; }
-.dig-button { width: 145px; height: 145px; background: #e0c39f; border: 6px solid #fff; border-radius: 50%; box-shadow: 0 9px 0 #aa835e; font-size: 65px; }.big-dino { font-size: clamp(150px, 24vw, 260px); line-height: 1.1; filter: sepia(.35) saturate(2); }
+.dig-button { width: 145px; height: 145px; background: #e0c39f; border: 6px solid #fff; border-radius: 50%; box-shadow: 0 9px 0 #aa835e; font-size: 65px; }.big-dino { display: grid; place-items: center; width: 270px; height: 230px; margin: 0 auto 12px; border: 8px solid #fff; border-radius: 48%; box-shadow: 0 9px 0 rgba(70, 88, 60, .15); font-size: 185px; line-height: 1; }
 
 .shape-row { display: flex; align-items: center; justify-content: center; min-height: 330px; }.shape-button { display: grid; place-items: center; width: 220px; height: 220px; margin: 15px; background: #fff; border: 4px solid #e9e2f8; border-radius: 36px; box-shadow: 0 9px 0 #d5c9ef; }.shape { display: block; width: 118px; height: 118px; background: #59b79a; }.shape.circle { border-radius: 50%; }.shape.square { background: #e6788c; }.shape.triangle { width: 0; height: 0; background: transparent; border-right: 72px solid transparent; border-bottom: 130px solid #f2b74c; border-left: 72px solid transparent; }
 
 .matching-stage { display: flex; align-items: center; justify-content: center; min-height: 360px; }.match-hero { position: relative; display: grid; place-items: center; width: 230px; height: 230px; background: #fff1c9; border: 6px solid #fff; border-radius: 48px; box-shadow: 0 10px 0 #e5cf8e; font-size: 120px; }.match-hero button { position: absolute; right: -15px; bottom: -15px; width: 80px; height: 80px; background: #6dc2a6; border: 5px solid #fff; border-radius: 50%; font-size: 32px; }.match-plus { margin: 25px; color: #b9aca4; font-size: 54px; }.match-choices { display: grid; grid-template-columns: repeat(2, 145px); gap: 14px; }.match-choices button { min-height: 140px; background: #fff; border: 4px solid #efdaea; border-radius: 32px; box-shadow: 0 8px 0 #dbb9d1; font-size: 75px; }
 
-.modal-backdrop { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(54, 44, 39, .63); backdrop-filter: blur(7px); }
+.modal-backdrop { position: fixed; z-index: 100; top: 0; right: 0; bottom: 0; left: 0; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(54, 44, 39, .63); backdrop-filter: blur(7px); }
 .math-modal, .success-card { position: relative; width: min(470px, 100%); padding: 28px 34px 32px; background: #fffaf1; border: 6px solid #fff; border-radius: 38px; box-shadow: 0 28px 70px rgba(29, 20, 17, .35); text-align: center; }
 .math-close { position: absolute; top: 16px; right: 16px; width: 52px; height: 52px; color: #8f837b; background: #f1ebe4; border: 0; border-radius: 50%; font-size: 20px; }
 .math-icon { font-size: 58px; }.math-modal h2, .success-card h2 { margin: 8px 0 6px; font-size: 30px; }.math-modal p { margin: 0; color: #82766e; font-family: Arial, sans-serif; font-size: 14px; }
@@ -182,6 +188,87 @@ legend small { margin-left: 8px; color: #988e87; font-family: Arial, sans-serif;
 .math-problem span { margin: 0 13px; color: #9b90bf; }.math-answer { display: grid; place-items: center; min-width: 62px; min-height: 57px; padding: 4px 8px; color: #6d5bc5; background: #fff; border-radius: 14px; }.math-problem.wrong { color: #d84f60; border-color: #ed9eaa; animation: shake .3s linear; }
 .math-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }.math-pad button { min-height: 70px; background: #fff; border: 2px solid #e8e0d7; border-radius: 19px; box-shadow: 0 5px 0 #ded4c9; font-size: 24px; }.math-pad .math-clear { color: #9c7168; background: #fff1ec; }.math-pad .math-submit { color: #fff; background: #6e5bc9; border-color: #6e5bc9; box-shadow: 0 5px 0 #50409b; }
 .success-backdrop { background: rgba(97, 79, 161, .32); }.success-card { position: relative; width: min(570px, 100%); padding-top: 20px; overflow: hidden; }.confetti { color: #ec7b93; font-size: 26px; word-spacing: 13px; }.success-mascot { display: block; font-size: 105px; }.success-card h2 { margin-top: -8px; font-size: 38px; }.earned-stars { color: #f7bb3c; font-size: 61px; letter-spacing: 6px; text-shadow: 0 5px 0 #d49227; }.new-sticker { display: inline-flex; align-items: center; margin: 10px 0; padding: 9px 16px; background: #e9f7ef; border-radius: 99px; }.new-sticker span { margin-left: 8px; font-size: 31px; }.success-actions { display: flex; justify-content: center; margin-top: 13px; }.success-actions button { min-width: 190px; }.next-button { color: #fff; background: #6e5bc9; box-shadow: 0 6px 0 #51409e; }
+
+@media (min-width: 900px) and (max-height: 820px) {
+  .parent-page { height: 100vh; min-height: 0; padding: 10px; overflow: hidden; }
+  .parent-shell { height: calc(100vh - 20px); min-height: 0; border-radius: 24px; }
+  .welcome-panel { padding: 22px; }
+  .brand { top: 17px; left: 24px; font-size: 21px; }
+  .brand-mark { width: 36px; height: 36px; }
+  .mascot-scene { height: 190px; margin-top: 24px; }
+  .mascot { bottom: 28px; font-size: 118px; }
+  .sun { top: 12px; font-size: 52px; }.cloud { font-size: 54px; }.cloud-two { top: 70px; font-size: 42px; }
+  .ground { height: 48px; padding-top: 7px; }
+  .welcome-panel h1 { margin: 10px 0 6px; font-size: 31px; }
+  .welcome-panel > p { font-size: 14px; line-height: 1.4; }
+  .progress-card { min-height: 48px; margin-top: 13px; padding: 10px 17px; border-radius: 17px; }
+
+  .setup-panel { padding: 17px 34px 14px; }
+  .setup-panel h2 { margin: 9px 0 10px; font-size: 27px; }
+  fieldset { margin-bottom: 9px; }
+  legend { margin-bottom: 5px; font-size: 13px; }
+  legend > span { width: 23px; height: 23px; margin-right: 7px; }
+  .segment-control { padding: 3px; border-radius: 13px; }
+  .segment-control button { min-height: 42px; padding: 5px 8px; border-radius: 10px; }
+  .game-picker { padding-bottom: 6px; }
+  .game-picker button { flex-basis: 64px; height: 64px; margin-right: 7px; padding: 5px 3px; border-radius: 15px; font-size: 23px; }
+  .game-picker small { max-width: 58px; margin-top: 3px; font-size: 9px; }
+  .start-button { min-height: 57px; padding: 9px 18px; border-radius: 18px; box-shadow: 0 6px 0 #4f429a, 0 11px 18px rgba(85, 68, 170, .2); font-size: 18px; }
+  .start-button span { width: 31px; height: 31px; margin-right: 9px; }
+  .parent-tip { margin-top: 8px; }
+
+  .kid-header { height: 64px; padding: 0 72px; }
+  .kid-brand { font-size: 21px; }.kid-brand span { width: 34px; height: 34px; }
+  .kid-status span { min-width: 78px; padding: 7px 11px; font-size: 13px; }
+  .parent-corner { width: 62px; height: 62px; }
+  .kids-hub { height: calc(100vh - 64px); min-height: 0; padding: 14px 70px 8px; overflow: hidden; }
+  .hub-title { margin-bottom: 10px; }
+  .hello-mascot { width: 58px; height: 58px; margin-right: 13px; border-width: 3px; font-size: 39px; }
+  .hub-title p { font-size: 13px; }.hub-title h1 { font-size: 29px; }
+  .game-grid { gap: 11px; }
+  .game-card { min-height: 143px; padding: 12px 9px 11px; border-radius: 21px; box-shadow: 0 6px 0 #ded8cd, 0 9px 20px rgba(82, 61, 46, .1); }
+  .game-icon { width: 58px; height: 58px; margin-bottom: 7px; border-radius: 19px; font-size: 39px; }
+  .game-copy strong { font-size: 15px; }.game-copy small { margin-top: 2px; font-size: 9px; }
+  .hub-hint { margin-top: 13px; }
+
+  .game-toolbar { grid-template-columns: 66px 1fr 66px; min-height: 72px; padding: 6px 70px; }
+  .home-button { width: 58px; height: 58px; border-radius: 19px; box-shadow: 0 5px 0 rgba(76, 62, 53, .12); font-size: 29px; }
+  .game-title-pill { min-height: 52px; padding: 7px 23px; box-shadow: 0 5px 0 rgba(76, 62, 53, .1); }
+  .game-title-pill span { margin-right: 8px; font-size: 29px; }.game-title-pill strong { font-size: 20px; }
+  .game-surface { height: calc(100vh - 146px); min-height: 0; margin-bottom: 10px; padding: 10px 26px 14px; overflow: hidden; border-radius: 27px; }
+  .game-prompt { margin-bottom: 8px; font-size: 23px; }
+
+  .coloring-pages { margin-bottom: 5px; padding-bottom: 4px; }
+  .coloring-pages button { flex-basis: 64px; min-height: 55px; margin: 0 3px; padding: 3px; border-radius: 14px; }
+  .coloring-pages span { height: 27px; }.coloring-pages span img { width: 31px; height: 27px; }.coloring-pages small { font-size: 8px; }
+  .coloring-workspace { grid-template-columns: 66px minmax(0, 520px) 66px; gap: 7px; }
+  .brush-toolbar, .zoom-toolbar { padding: 7px 4px 9px; border-width: 2px; border-radius: 18px; box-shadow: 0 4px 0 #e2d5c3; }
+  .tool-icon { font-size: 19px; }.brush-toolbar > small, .zoom-toolbar > small { margin-bottom: 5px; font-size: 8px; }
+  .brush-toolbar button, .zoom-toolbar button { width: 46px; height: 46px; margin: 3px 0; border-radius: 14px; box-shadow: 0 3px 0 #d7cec5; }
+  .zoom-toolbar button { font-size: 24px; }.zoom-toolbar strong { font-size: 9px; }
+  .palette { margin: 7px auto 5px; }
+  .color-dot { width: 44px; height: 44px; margin: 0 4px; border-width: 4px; }
+  .color-dot.selected { outline-width: 3px; }
+  .eraser-button { width: 64px; height: 46px; margin-left: 5px; border-width: 3px; border-radius: 14px; }.eraser-button span { font-size: 20px; }
+  .coloring-actions { flex-wrap: nowrap; }
+  .soft-button, .next-button, .done-button { min-height: 49px; margin: 4px; padding: 8px 16px; border-radius: 15px; font-size: 13px; }
+
+  .puzzle-targets { min-height: 130px; padding: 10px; }.puzzle-pieces { min-height: 105px; margin-top: 12px; padding: 10px; }
+  .puzzle-target, .puzzle-piece { width: 88px; height: 88px; margin: 5px; border-radius: 21px; font-size: 50px; }
+  .memory-grid { margin: 10px auto; gap: 11px; }.memory-card { min-height: 104px; font-size: 48px; }
+  .listen-bubble { width: 75px; height: 75px; margin-bottom: 10px; font-size: 35px; }
+  .sound-orb { width: 105px; height: 105px; margin-bottom: 12px; font-size: 36px; }
+  .choice-grid { gap: 11px; }.letter-button, .number-button, .animal-button { min-height: 84px; font-size: 42px; }
+  .number-path { margin-bottom: 12px; }.number-path span { width: 41px; height: 41px; }
+  .vehicle-road { min-height: 190px; padding: 15px; border-width: 9px; }.vehicle-button { width: 135px; height: 118px; font-size: 62px; }
+  .dino-button { min-height: 170px; padding: 9px; font-size: 78px; }.dino-button small { min-height: 25px; font-size: 11px; }
+  .bone-board { min-height: 130px; margin-bottom: 10px; padding: 18px; }.bone-board span { font-size: 58px; }
+  .dig-button { width: 115px; height: 115px; font-size: 50px; }
+  .big-dino { width: 225px; height: 190px; margin-bottom: 8px; font-size: 150px; }
+  .shape-row { min-height: 270px; }.shape-button { width: 180px; height: 180px; margin: 10px; }.shape { width: 95px; height: 95px; }
+  .matching-stage { min-height: 285px; }.match-hero { width: 190px; height: 190px; font-size: 96px; }.match-hero button { width: 62px; height: 62px; font-size: 25px; }
+  .match-plus { margin: 18px; }.match-choices { grid-template-columns: repeat(2, 115px); gap: 10px; }.match-choices button { min-height: 110px; font-size: 60px; }
+}
 
 @keyframes sun-wiggle { 0%,100% { transform: rotate(0); } 50% { transform: rotate(12deg) scale(1.05); } }
 @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }

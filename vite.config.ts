@@ -45,8 +45,8 @@ export default defineConfig(async () => {
 
   return {
     build: {
-      target: "safari11",
-      cssTarget: "safari11",
+      target: ["chrome61", "safari11"],
+      cssTarget: ["chrome61", "safari11"],
     },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }

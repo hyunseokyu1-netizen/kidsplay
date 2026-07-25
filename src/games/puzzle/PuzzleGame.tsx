@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { EmojiIcon } from "../../components/EmojiIcon";
 import { difficultyCount } from "../registry";
 import type { GameProps } from "../shared";
 import { tx } from "../shared";
@@ -34,7 +35,9 @@ export function PuzzleGame({ age, language, onComplete }: GameProps) {
             onClick={() => selected && place(selected, piece)}
             aria-label={tx(language, `${piece} 자리`, `${piece} spot`)}
           >
-            {placed.includes(piece) ? piece : <span className="ghost-piece">{piece}</span>}
+            {placed.includes(piece)
+              ? <EmojiIcon symbol={piece} />
+              : <span className="ghost-piece"><EmojiIcon symbol={piece} /></span>}
           </button>
         ))}
       </div>
@@ -46,10 +49,9 @@ export function PuzzleGame({ age, language, onComplete }: GameProps) {
             className={`puzzle-piece ${selected === piece ? "selected-piece" : ""}`}
             onDragStart={(event) => event.dataTransfer.setData("text/plain", piece)}
             onClick={() => setSelected(piece)}
-          >{piece}</button>
+          ><EmojiIcon symbol={piece} /></button>
         ))}
       </div>
     </div>
   );
 }
-

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { EmojiIcon } from "../../components/EmojiIcon";
 import { useSpeech } from "../../hooks/useSpeech";
 import { difficultyCount } from "../registry";
 import type { GameProps } from "../shared";
@@ -33,7 +34,7 @@ export function VehicleGame({ age, language, onComplete }: GameProps) {
       <p className="game-prompt">{tx(language, "소리를 듣고 탈것을 골라요", "Listen and choose the vehicle")}</p>
       <button className="listen-bubble" onClick={() => speak(target.ko, target.en)}>🔊</button>
       <div className="vehicle-road">
-        {[...vehicles].reverse().map((vehicle) => <button key={vehicle.icon} className="vehicle-button" onClick={() => choose(vehicle.icon)}>{vehicle.icon}<span className="road-line" /></button>)}
+        {[...vehicles].reverse().map((vehicle) => <button key={vehicle.icon} className="vehicle-button" onClick={() => choose(vehicle.icon)}><EmojiIcon symbol={vehicle.icon} /><span className="road-line" /></button>)}
       </div>
     </div>
   );

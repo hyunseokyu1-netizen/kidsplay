@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { EmojiIcon } from "../../components/EmojiIcon";
 import { useSpeech } from "../../hooks/useSpeech";
 import type { GameProps } from "../shared";
 import { tx } from "../shared";
@@ -29,10 +30,10 @@ export function MatchingGame({ language, onComplete }: GameProps) {
     <div>
       <p className="game-prompt">{tx(language, "어울리는 짝을 찾아 주세요", "Find the picture that belongs together")}</p>
       <div className="matching-stage">
-        <div className="match-hero">{pair.left}<button onClick={() => speak(pair.ko, pair.en)} aria-label={tx(language, "소리 듣기", "Listen")}>🔊</button></div>
+        <div className="match-hero"><EmojiIcon symbol={pair.left} /><button onClick={() => speak(pair.ko, pair.en)} aria-label={tx(language, "소리 듣기", "Listen")}>▶</button></div>
         <span className="match-plus">＋</span>
         <div className="match-choices">
-          {CHOICES.map((choice) => <button key={choice} onClick={() => choose(choice)}>{choice}</button>)}
+          {CHOICES.map((choice) => <button key={choice} onClick={() => choose(choice)}><EmojiIcon symbol={choice} /></button>)}
         </div>
       </div>
     </div>

@@ -52,5 +52,19 @@ test("offers expanded coloring pages, brush sizes, and zoom", async () => {
   assert.match(source, /const BRUSH_SIZES = \[18, 36, 58\]/);
   assert.match(source, /zoom >= 1\.5/);
   assert.match(source, /\/coloring\/robot\.svg/);
+  assert.match(source, /className="coloring-zoom-layer"/);
+  assert.match(source, /transform: `scale\(\$\{zoom\}\)`/);
+  assert.match(source, /drawContained\(context, outline, 1\)/);
   assert.equal((source.match(/src: "\/coloring\//g) ?? []).length, 14);
+});
+
+test("supports compact legacy laptop screens and image-based emoji", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  const app = await readFile(new URL("../src/components/KidsPlayApp.tsx", import.meta.url), "utf8");
+  const emoji = await readFile(new URL("../src/components/EmojiIcon.tsx", import.meta.url), "utf8");
+
+  assert.match(css, /min-width: 900px\) and \(max-height: 820px/);
+  assert.match(css, /\.game-surface \{ height: calc\(100vh - 146px\)/);
+  assert.match(app, /<EmojiIcon symbol=\{game\.icon\}/);
+  assert.match(emoji, /\/emoji\/\$\{emojiCode\(symbol\)\}\.svg/);
 });
