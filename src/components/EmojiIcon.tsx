@@ -14,11 +14,15 @@ function emojiCode(symbol: string) {
     .join("-");
 }
 
+export function emojiSrc(symbol: string) {
+  return `/emoji/${emojiCode(symbol)}.svg`;
+}
+
 export function EmojiIcon({ symbol, label = "", className = "" }: EmojiIconProps) {
   return (
     <img
       className={`emoji-icon ${className}`.trim()}
-      src={`/emoji/${emojiCode(symbol)}.svg`}
+      src={emojiSrc(symbol)}
       alt={label}
       draggable={false}
     />

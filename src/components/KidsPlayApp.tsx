@@ -3,13 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import { EmojiIcon } from "./EmojiIcon";
 import { AlphabetGame } from "../games/alphabet/AlphabetGame";
+import { AdditionGame } from "../games/addition/AdditionGame";
 import { AnimalGame } from "../games/animals/AnimalGame";
 import { ColoringGame } from "../games/coloring/ColoringGame";
+import { ConnectDotsGame } from "../games/connectdots/ConnectDotsGame";
 import { DinosaurGame } from "../games/dinosaurs/DinosaurGame";
+import { DrawingGame } from "../games/drawing/DrawingGame";
+import { HiddenShapeGame } from "../games/hiddenshape/HiddenShapeGame";
+import { JigsawGame } from "../games/jigsaw/JigsawGame";
+import { MazeGame } from "../games/maze/MazeGame";
 import { MatchingGame } from "../games/matching/MatchingGame";
 import { MemoryGame } from "../games/memory/MemoryGame";
 import { NumberGame } from "../games/numbers/NumberGame";
+import { PopStarGame } from "../games/popstar/PopStarGame";
 import { PuzzleGame } from "../games/puzzle/PuzzleGame";
+import { RunningGame } from "../games/running/RunningGame";
 import { GAMES, AGE_LABELS, STICKERS } from "../games/registry";
 import { ShapeGame } from "../games/shapes/ShapeGame";
 import { tx } from "../games/shared";
@@ -31,7 +39,17 @@ const GAME_COMPONENTS = {
   dinosaurs: DinosaurGame,
   shapes: ShapeGame,
   matching: MatchingGame,
+  maze: MazeGame,
+  jigsaw: JigsawGame,
+  addition: AdditionGame,
+  drawing: DrawingGame,
+  connectdots: ConnectDotsGame,
+  popstar: PopStarGame,
+  running: RunningGame,
+  hiddenshape: HiddenShapeGame,
 };
+
+const HUB_PAGE_SIZE = 10;
 
 function ParentScreen({
   settings,
@@ -142,6 +160,9 @@ function KidHeader({ language, remaining, progress, onExitRequest }: { language:
 
 function KidsHub({ language, progress, onChoose }: { language: Language; progress: Progress; onChoose: (game: GameId) => void }) {
   const speak = useSpeech(language);
+  const [page, setPage] = useState(0);
+  const pages = Math.ceil(GAMES.length / HUB_PAGE_SIZE);
+  const visibleGames = GAMES.slice(page * HUB_PAGE_SIZE, (page + 1) * HUB_PAGE_SIZE);
   return (
     <main className="kids-hub">
       <div className="hub-title">
@@ -149,7 +170,7 @@ function KidsHub({ language, progress, onChoose }: { language: Language; progres
         <div><p>{tx(language, "안녕, 꼬마 탐험가!", "Hello, little explorer!")}</p><h1>{tx(language, "오늘은 무엇을 해볼까?", "What shall we play today?")}</h1></div>
       </div>
       <div className="game-grid">
-        {GAMES.map((game) => (
+        {visibleGames.map((game) => (
           <button
             key={game.id}
             className="game-card"
@@ -162,6 +183,13 @@ function KidsHub({ language, progress, onChoose }: { language: Language; progres
             <span className="card-stars">{progress.completed[game.id] ? "★" : "☆"}</span>
           </button>
         ))}
+      </div>
+      <div className="hub-pages" aria-label={tx(language, "게임 목록 페이지", "Game list pages")}>
+        <button disabled={page === 0} onClick={() => setPage(Math.max(0, page - 1))} aria-label={tx(language, "이전 게임", "Previous games")}>◀</button>
+        {Array.from({ length: pages }, (_, index) => (
+          <button key={index} className={index === page ? "active" : ""} onClick={() => setPage(index)} aria-label={`${index + 1}`}>{index + 1}</button>
+        ))}
+        <button disabled={page === pages - 1} onClick={() => setPage(Math.min(pages - 1, page + 1))} aria-label={tx(language, "다음 게임", "Next games")}>▶</button>
       </div>
       <p className="hub-hint">🔒 {tx(language, "부모님 메뉴는 위쪽 모서리를 1초간 눌러 주세요", "Parents: hold a top corner for 1 second")}</p>
     </main>
@@ -215,7 +243,7 @@ function ExitGate({ language, timedOut, onClose, onExit }: { language: Language;
   return (
     <div className="modal-backdrop" role="dialog" aria-modal="true" aria-label={tx(language, "부모 확인", "Parent check")}>
       <div className="math-modal">
-        {!timedOut && <button className="math-close" onClick={onClose} aria-label={tx(language, "닫기", "Close")}>✕</button>}
+        <button className="math-close" onClick={onClose} aria-label={tx(language, "닫기", "Close")}>✕</button>
         <div className="math-icon">{timedOut ? "⏰" : "🧠"}</div>
         <h2>{timedOut ? tx(language, "놀이 시간이 끝났어요", "Play time is over") : tx(language, "부모님 확인", "Grown-up check")}</h2>
         <p>{tx(language, "곱셈 문제를 풀어 주세요", "Solve the multiplication problem")}</p>
@@ -293,12 +321,12 @@ export function KidsPlayApp() {
     const update = () => {
       const seconds = Math.max(0, Math.ceil((sessionEnd - Date.now()) / 1000));
       setRemaining(seconds);
-      if (seconds === 0) { setTimedOut(true); setExitGate(true); }
+      if (seconds === 0 && !timedOut) { setTimedOut(true); setExitGate(true); }
     };
     update();
     const timer = window.setInterval(update, 1000);
     return () => window.clearInterval(timer);
-  }, [mode, sessionEnd]);
+  }, [mode, sessionEnd, timedOut]);
 
   useEffect(() => {
     if (mode !== "kids") return;

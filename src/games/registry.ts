@@ -11,6 +11,14 @@ export const GAMES: GameInfo[] = [
   { id: "dinosaurs", icon: "🦕", title: { ko: "공룡 나라", en: "Dinosaurs" }, subtitle: { ko: "쿵쿵 공룡 탐험", en: "Explore dinosaurs" }, color: "#73AF63", light: "#EFF9EC" },
   { id: "shapes", icon: "🔺", title: { ko: "모양 찾기", en: "Shapes" }, subtitle: { ko: "동그라미 세모 네모", en: "Circle, triangle, square" }, color: "#8B79D9", light: "#F2EFFF" },
   { id: "matching", icon: "🧦", title: { ko: "그림 맞추기", en: "Matching" }, subtitle: { ko: "딱 맞는 짝을 찾아요", en: "Find the right match" }, color: "#DE75A8", light: "#FFF0F8" },
+  { id: "maze", icon: "🧠", title: { ko: "미로 찾기", en: "Maze" }, subtitle: { ko: "길을 따라 도착해요", en: "Find the way out" }, color: "#6CA66A", light: "#EFF8E9" },
+  { id: "jigsaw", icon: "🐮", title: { ko: "동물 직소", en: "Animal Jigsaw" }, subtitle: { ko: "동물 조각을 맞춰요", en: "Build an animal" }, color: "#4FA8BE", light: "#EAF8FB" },
+  { id: "addition", icon: "🔢", title: { ko: "더하기 카드", en: "Addition Cards" }, subtitle: { ko: "그림을 세어 더해요", en: "Count and add" }, color: "#E19A3F", light: "#FFF6E8" },
+  { id: "drawing", icon: "🎨", title: { ko: "그림 그리기", en: "Drawing" }, subtitle: { ko: "마음껏 그리고 칠해요", en: "Draw with many colors" }, color: "#E06E9F", light: "#FFF0F7" },
+  { id: "connectdots", icon: "🔢", title: { ko: "숫자 선 잇기", en: "Connect the Dots" }, subtitle: { ko: "숫자 순서대로 이어요", en: "Connect numbers in order" }, color: "#60A7D8", light: "#ECF7FF" },
+  { id: "popstar", icon: "🏅", title: { ko: "별 팡팡", en: "Pop Stars" }, subtitle: { ko: "같은 색 별을 모아요", en: "Pop matching stars" }, color: "#7969D3", light: "#F1EFFF" },
+  { id: "running", icon: "🚀", title: { ko: "모양 달리기", en: "Shape Runner" }, subtitle: { ko: "같은 모양을 눌러요", en: "Choose the same shape" }, color: "#50B694", light: "#EAF9F3" },
+  { id: "hiddenshape", icon: "🔺", title: { ko: "숨은 모양", en: "Hidden Shapes" }, subtitle: { ko: "카메라로 모양을 찾아요", en: "Find it with the camera" }, color: "#5D8ED8", light: "#EDF4FF" },
 ];
 
 export const AGE_LABELS: Record<AgeGroup, { ko: string; en: string }> = {
@@ -23,4 +31,3 @@ export const STICKERS = ["🌈", "🚀", "🦄", "🏅", "🐳", "🌻", "👑",
 
 export const difficultyCount = (age: AgeGroup, values: [number, number, number]) =>
   values[age === "toddler" ? 0 : age === "preschool" ? 1 : 2];
-

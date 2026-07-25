@@ -11,7 +11,15 @@ export type GameId =
   | "vehicles"
   | "dinosaurs"
   | "shapes"
-  | "matching";
+  | "matching"
+  | "maze"
+  | "jigsaw"
+  | "addition"
+  | "drawing"
+  | "connectdots"
+  | "popstar"
+  | "running"
+  | "hiddenshape";
 
 export type GameInfo = {
   id: GameId;
